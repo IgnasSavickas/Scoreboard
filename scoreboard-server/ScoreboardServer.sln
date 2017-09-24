@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scoreboard-server", "scoreboard-server\scoreboard-server.csproj", "{4342D7CA-A45A-4BF2-985A-F8C7760A5448}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreboardServer", "ScoreboardServer\ScoreboardServer.csproj", "{E799B925-C412-492B-A5D8-D064F2331FFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4342D7CA-A45A-4BF2-985A-F8C7760A5448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4342D7CA-A45A-4BF2-985A-F8C7760A5448}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4342D7CA-A45A-4BF2-985A-F8C7760A5448}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4342D7CA-A45A-4BF2-985A-F8C7760A5448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E799B925-C412-492B-A5D8-D064F2331FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E799B925-C412-492B-A5D8-D064F2331FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E799B925-C412-492B-A5D8-D064F2331FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E799B925-C412-492B-A5D8-D064F2331FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E6F01643-42C1-4164-960E-79D9F8D25C02}
+		SolutionGuid = {0F07A512-859D-4BC0-BFDD-B5782140EBD7}
 	EndGlobalSection
 EndGlobal
