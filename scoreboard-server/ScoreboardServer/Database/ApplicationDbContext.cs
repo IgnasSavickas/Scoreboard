@@ -15,11 +15,5 @@ namespace ScoreboardServer.Database
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        //to configure db
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }

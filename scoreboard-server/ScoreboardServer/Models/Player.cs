@@ -26,6 +26,6 @@ namespace ScoreboardServer.Models
         public int Stl { get; set; }
         public int Blk { get; set; }
         public int To { get; set; }
-        public Team Team { get; set; }
+        public int TeamId { get; set; }
     }
 }

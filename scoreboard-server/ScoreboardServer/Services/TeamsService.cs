@@ -16,33 +16,33 @@ namespace ScoreboardServer.Services
             _repository = repository;
         }
 
-        public Task<Team> GetTeamById(int id)
+        public async Task<Team> GetTeamById(int id)
         {
-            var team = _repository.GetById(id);
+            var team = await _repository.GetById(id);
             return team;
         }
 
-        public Task<ICollection<Team>> GetAllTeams(int offset, int limit)
+        public async Task<ICollection<Team>> GetAllTeams(int offset, int limit)
         {
-            var teams = _repository.GetAll(offset, limit);
+            var teams = await _repository.GetAll(offset, limit);
             return teams;
         }
 
-        public Task<int> Create(Team team)
+        public async Task<int> Create(Team team)
         {
-            var newId = _repository.Create(team);
+            var newId = await _repository.Create(team);
             return newId;
         }
 
-        public Task<Team> Update(Team team)
+        public async Task<Team> Update(Team team)
         {
-            var updatedTeam = _repository.Update(team);
+            var updatedTeam = await _repository.Update(team);
             return updatedTeam;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var deleted = _repository.Delete(id);
+            var deleted = await _repository.Delete(id);
             return deleted;
         }
     }
