@@ -33,7 +33,7 @@ namespace ScoreboardServer.Repositories
 
         public async Task<int> Create(Team newTeam)
         {
-            await _teams.AddAsync(newTeam);
+            var team = await _teams.AddAsync(newTeam);
             await _context.SaveChangesAsync();
             return newTeam.Id;
         }
@@ -50,7 +50,7 @@ namespace ScoreboardServer.Repositories
         public async Task<bool> Delete(int deletedId)
         {
             var deletedTeam = await _teams.FirstOrDefaultAsync(x => x.Id == deletedId);
-            _teams.Remove(deletedTeam);
+            var team = _teams.Remove(deletedTeam);
             await _context.SaveChangesAsync();
             return true;
         }

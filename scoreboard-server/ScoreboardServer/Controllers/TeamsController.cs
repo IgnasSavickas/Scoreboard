@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
@@ -10,6 +11,7 @@ using ScoreboardServer.Services;
 
 namespace ScoreboardServer.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class TeamsController : Controller
     {
@@ -45,7 +47,8 @@ namespace ScoreboardServer.Controllers
         public async Task<IActionResult> Post([FromBody]Team value)
         {
             var id = await _service.Create(value);
-            return Ok(id);
+            return Created("/teams/" + id, id);
+            //return Ok(id);
         }
 
         // PUT api/values/5
