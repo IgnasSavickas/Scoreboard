@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoreboardServer", "ScoreboardServer\ScoreboardServer.csproj", "{E799B925-C412-492B-A5D8-D064F2331FFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{CF6B7045-AD1D-4543-92B3-824A68CBA3A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{CF6B7045-AD1D-4543-92B3-824A68CBA3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{47F9AEDC-64EB-4B3F-89C9-ED021FF99706}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CF6B7045-AD1D-4543-92B3-824A68CBA3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF6B7045-AD1D-4543-92B3-824A68CBA3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF6B7045-AD1D-4543-92B3-824A68CBA3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F9AEDC-64EB-4B3F-89C9-ED021FF99706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F9AEDC-64EB-4B3F-89C9-ED021FF99706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F9AEDC-64EB-4B3F-89C9-ED021FF99706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F9AEDC-64EB-4B3F-89C9-ED021FF99706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

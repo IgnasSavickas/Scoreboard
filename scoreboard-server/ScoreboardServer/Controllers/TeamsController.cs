@@ -11,7 +11,6 @@ using ScoreboardServer.Services;
 
 namespace ScoreboardServer.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class TeamsController : Controller
     {
@@ -48,15 +47,18 @@ namespace ScoreboardServer.Controllers
         {
             var id = await _service.Create(value);
             return Created("/teams/" + id, id);
-            //return Ok(id);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Team value)
         {
-            var updatedTeam = await _service.Update(value);
-            return Ok(updatedTeam);
+            var result = await _service.Update(id, value);
+            if (!result)
+            {
+                return NotFound("No team found");
+            }
+            return Ok();
         }
 
         // DELETE api/values/5
@@ -64,7 +66,11 @@ namespace ScoreboardServer.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _service.Delete(id);
-            return Ok(result);
+            if (!result)
+            {
+                return NotFound("No team found");
+            }
+            return Ok();
         }
     }
 }

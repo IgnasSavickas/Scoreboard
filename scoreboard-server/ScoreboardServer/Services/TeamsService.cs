@@ -34,16 +34,26 @@ namespace ScoreboardServer.Services
             return newId;
         }
 
-        public async Task<Team> Update(Team team)
+        public async Task<bool> Update(int id, Team updatedTeam)
         {
-            var updatedTeam = await _repository.Update(team);
-            return updatedTeam;
+            var existringTeam = await GetTeamById(id);
+            if (existringTeam == null)
+            {
+                return false;
+            }
+            await _repository.Update(existringTeam, updatedTeam);
+            return true;
         }
 
         public async Task<bool> Delete(int id)
         {
-            var deleted = await _repository.Delete(id);
-            return deleted;
+            var existringTeam = await GetTeamById(id);
+            if (existringTeam == null)
+            {
+                return false;
+            }
+            await _repository.Delete(existringTeam);
+            return true;
         }
     }
 }

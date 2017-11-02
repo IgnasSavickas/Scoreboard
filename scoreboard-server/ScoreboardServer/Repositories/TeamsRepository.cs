@@ -38,21 +38,17 @@ namespace ScoreboardServer.Repositories
             return newTeam.Id;
         }
 
-        public async Task<Team> Update(Team updatedTeam)
+        public async Task Update(Team existingTeam, Team updatedTeam)
         {
-            var existingTeam = await _teams.FirstOrDefaultAsync(x => x.Id == updatedTeam.Id);
             _teams.Update(existingTeam);
             MapUpdatedValues(existingTeam, updatedTeam);
             await _context.SaveChangesAsync();
-            return updatedTeam;
         }
 
-        public async Task<bool> Delete(int deletedId)
+        public async Task Delete(Team deletedTeam)
         {
-            var deletedTeam = await _teams.FirstOrDefaultAsync(x => x.Id == deletedId);
-            var team = _teams.Remove(deletedTeam);
+            _teams.Remove(deletedTeam);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         private static void MapUpdatedValues(Team existingTeam, Team updatedTeam)

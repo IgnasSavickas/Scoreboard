@@ -45,15 +45,19 @@ namespace ScoreboardServer.Controllers
         public async Task<IActionResult> Post([FromBody]Player value)
         {
             var id = await _service.Create(value);
-            return Ok(id);
+            return Created("/teams/" + id, id);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Player value)
         {
-            var updatedPlayer = await _service.Update(value);
-            return Ok(updatedPlayer);
+            var result = await _service.Update(id, value);
+            if (!result)
+            {
+                return NotFound("No player found");
+            }
+            return Ok();
         }
 
         // DELETE api/values/5
@@ -61,7 +65,11 @@ namespace ScoreboardServer.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _service.Delete(id);
-            return Ok(result);
+            if (!result)
+            {
+                return NotFound("No player found");
+            }
+            return Ok();
         }
     }
 }

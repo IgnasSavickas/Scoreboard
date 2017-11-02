@@ -11,7 +11,7 @@ namespace ScoreboardServer.Repositories
         Task<Team> GetById(int id);
         Task<ICollection<Team>> GetAll(int offset, int limit);
         Task<int> Create(Team newTeam);
-        Task<Team> Update(Team updatedTeam);
-        Task<bool> Delete(int deletedId);
+        Task Update(Team existingTeam, Team updatedTeam);
+        Task Delete(Team deletedTeam);
     }
 }

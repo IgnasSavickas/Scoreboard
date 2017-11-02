@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 
-namespace ScoreboardServer
+namespace IdentityServer
 {
     public class Config
     {
@@ -12,7 +12,7 @@ namespace ScoreboardServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("scoreboardapi", "Scoreboard API")
             };
         }
 
@@ -34,7 +34,7 @@ namespace ScoreboardServer
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "scoreboardapi" }
                 }
             };
         }

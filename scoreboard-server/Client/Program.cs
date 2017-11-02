@@ -13,7 +13,7 @@ namespace Client
         private static async Task MainAsync()
         {
             // discover endpoints from metadata
-            var disco = await DiscoveryClient.GetAsync("http://localhost:65258");
+            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);
@@ -22,7 +22,7 @@ namespace Client
 
             // request token
             var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("scoreboardapi");
 
             if (tokenResponse.IsError)
             {
@@ -37,7 +37,7 @@ namespace Client
             var client = new HttpClient();
             client.SetBearerToken(tokenResponse.AccessToken);
 
-            var response = await client.GetAsync("http://localhost:65258/api/identity");
+            var response = await client.GetAsync("http://localhost:5001/api/teams");
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.StatusCode);

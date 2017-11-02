@@ -35,20 +35,17 @@ namespace ScoreboardServer
                 c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
 
-            /*services.AddIdentityServer().AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(Config.GetApiResources()).AddInMemoryClients(Config.GetClients());*/
+            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
 
-            //services.AddMvcCore().AddAuthorization().AddJsonFormatters();
-
-            /*services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
+           services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
             {
-                options.Authority = "http://localhost:65258";
+                options.Authority = "http://localhost:5000";
                 options.RequireHttpsMetadata = false;
 
-                options.ApiName = "api1";
-            });*/
+                options.ApiName = "scoreboardapi";
+            });
 
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            /*string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,7 +54,7 @@ namespace ScoreboardServer
             {
                 options.Authority = domain;
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
-            });
+            });*/
 
             services.AddMvc();
 
@@ -75,8 +72,6 @@ namespace ScoreboardServer
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            //app.UseIdentityServer();
 
             app.UseAuthentication();
 

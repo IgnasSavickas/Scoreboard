@@ -39,21 +39,17 @@ namespace ScoreboardServer.Repositories
             return newPlayer.Id;
         }
 
-        public async Task<Player> Update(Player updatedPlayer)
+        public async Task Update(Player existingPlayer, Player updatedPlayer)
         {
-            var existingPlayer = await _players.FirstOrDefaultAsync(x => x.Id == updatedPlayer.Id);
             _players.Update(existingPlayer);
             MapUpdatedValues(existingPlayer, updatedPlayer);
             await _context.SaveChangesAsync();
-            return updatedPlayer;
         }
 
-        public async Task<bool> Delete(int deletedId)
+        public async Task Delete(Player deletedPlayer)
         {
-            var deletedTeam = await _players.FirstOrDefaultAsync(x => x.Id == deletedId);
-            _players.Remove(deletedTeam);
+            _players.Remove(deletedPlayer);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         private static void MapUpdatedValues(Player existingPlayer, Player updatedPlayer)

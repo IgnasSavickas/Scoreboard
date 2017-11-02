@@ -11,7 +11,7 @@ namespace ScoreboardServer.Services
         Task<Player> GetPlayerById(int id);
         Task<ICollection<Player>> GetAllPlayers(int offset, int limit);
         Task<int> Create(Player player);
-        Task<Player> Update(Player player);
+        Task<bool> Update(int id, Player player);
         Task<bool> Delete(int id);
     }
 }
