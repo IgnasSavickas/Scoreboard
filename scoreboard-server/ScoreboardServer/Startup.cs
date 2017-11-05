@@ -32,7 +32,18 @@ namespace ScoreboardServer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("scoreboard_server", new Info());
-                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "header", Description = "Please insert JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                /*c.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                {
+                    Type = "oauth2",
+                    Flow = "implicit",
+                    AuthorizationUrl = "http://localhost:5000/Account/Login",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        { "scoreboardapi", "Scoreboard API" }
+                    }
+                });*/
+
             });
 
             services.AddMvcCore().AddAuthorization().AddJsonFormatters();
@@ -62,7 +73,7 @@ namespace ScoreboardServer
             services.AddScoped<ITeamsRepository, TeamsRepository>();
             services.AddScoped<IPlayersService, PlayersService>();
             services.AddScoped<IPlayersRepository, PlayersRepository>();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=./database.db"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +94,7 @@ namespace ScoreboardServer
                 {
                     c.DocExpansion("none");
                     c.SwaggerEndpoint(swaggerUrl, "Scoreboard Server");
+                    //c.ConfigureOAuth2("swagger", "secret", null, "Swagger UI");
                 });
         }
     }

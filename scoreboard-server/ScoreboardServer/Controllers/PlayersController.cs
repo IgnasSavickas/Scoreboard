@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
@@ -11,6 +12,7 @@ using ScoreboardServer.Services;
 namespace ScoreboardServer.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class PlayersController : Controller
     {
         private readonly IPlayersService _service;

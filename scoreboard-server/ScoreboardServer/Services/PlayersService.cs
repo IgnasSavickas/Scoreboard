@@ -34,7 +34,7 @@ namespace ScoreboardServer.Services
             return newId;
         }
 
-        public async Task<bool> Update(int id, Player player)
+        public async Task<bool> Update(int id, Player updatedPlayer)
         {
             var existringPlayer = await GetPlayerById(id);
             if (existringPlayer == null)

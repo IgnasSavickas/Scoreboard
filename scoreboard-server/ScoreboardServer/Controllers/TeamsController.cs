@@ -12,6 +12,7 @@ using ScoreboardServer.Services;
 namespace ScoreboardServer.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class TeamsController : Controller
     {
         private readonly ITeamsService _service;
