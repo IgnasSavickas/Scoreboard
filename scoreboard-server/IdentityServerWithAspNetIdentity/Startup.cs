@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using IdentityServerWithAspNetIdentity.Data;
 using IdentityServerWithAspNetIdentity.Models;
 using IdentityServerWithAspNetIdentity.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace IdentityServerWithAspNetIdentity
 {
@@ -26,6 +27,11 @@ namespace IdentityServerWithAspNetIdentity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("identity_server", new Info());
+            });
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -49,8 +55,13 @@ namespace IdentityServerWithAspNetIdentity
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "998042782978-s07498t8i8jas7npj4crve1skpromf37.apps.googleusercontent.com";
-                    options.ClientSecret = "HsnwJri_53zn7VcO1Fm7THBb";
+                    options.ClientId = "351208368888-bcb7bftvvvbn1as49kbhoj6ddln213r5.apps.googleusercontent.com";
+                    options.ClientSecret = "QG3Kg59T2rKb3Ad3Rng-fXNQ";
+                })
+                .AddFacebook(options =>
+                {
+                    options.ClientId = "1599276843461327";
+                    options.ClientSecret = "80f97444975e207acc9189284d31094e";
                 });
         }
 
@@ -79,6 +90,14 @@ namespace IdentityServerWithAspNetIdentity
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            const string swaggerUrl = "/swagger/identity_server/swagger.json";
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.DocExpansion("none");
+                    c.SwaggerEndpoint(swaggerUrl, "Identity Server");
+                });
         }
     }
 }

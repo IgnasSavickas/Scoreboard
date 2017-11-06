@@ -22,21 +22,26 @@ namespace ScoreboardServer.Repositories
         public async Task<Player> GetById(int id)
         {
             var player = await _players
-                .FindAsync(id);
+                .Include(x => x.Team)
+                .SingleAsync(x => x.Id == id);
             return player;
         }
 
         public async Task<ICollection<Player>> GetAll(int offset, int limit)
         {
-            var players = await _players.Skip(offset).Take(limit).ToArrayAsync();
+            var players = await _players
+                .Include(x => x.Team)
+                .Skip(offset)
+                .Take(limit)
+                .ToArrayAsync();
             return players;
         }
 
         public async Task<int> Create(Player newPlayer)
         {
-            await _players.AddAsync(newPlayer);
+            var player = await _players.AddAsync(newPlayer);
             await _context.SaveChangesAsync();
-            return newPlayer.Id;
+            return player.Entity.Id;
         }
 
         public async Task Update(Player existingPlayer, Player updatedPlayer)

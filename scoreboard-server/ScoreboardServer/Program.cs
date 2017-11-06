@@ -16,6 +16,8 @@ namespace ScoreboardServer
     {
         public static void Main(string[] args)
         {
+            Console.Title = "ScoreboardServer";
+
             var host = BuildWebHost(args);
 
             using (var scope = host.Services.CreateScope())

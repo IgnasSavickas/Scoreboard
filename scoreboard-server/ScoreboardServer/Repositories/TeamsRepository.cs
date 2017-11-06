@@ -27,7 +27,10 @@ namespace ScoreboardServer.Repositories
 
         public async Task<ICollection<Team>> GetAll(int offset, int limit)
         {
-            var teams = await _teams.Skip(offset).Take(limit).ToArrayAsync();
+            var teams = await _teams
+                .Skip(offset)
+                .Take(limit)
+                .ToArrayAsync();
             return teams;
         }
 
@@ -35,7 +38,7 @@ namespace ScoreboardServer.Repositories
         {
             var team = await _teams.AddAsync(newTeam);
             await _context.SaveChangesAsync();
-            return newTeam.Id;
+            return team.Entity.Id;
         }
 
         public async Task Update(Team existingTeam, Team updatedTeam)

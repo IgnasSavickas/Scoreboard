@@ -13,11 +13,11 @@ namespace ScoreboardServer.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
-    public class PlayersController : Controller
+    public class GamesController : Controller
     {
-        private readonly IPlayersService _service;
+        private readonly IGamesService _service;
 
-        public PlayersController(IPlayersService service)
+        public GamesController(IGamesService service)
         {
             _service = service;
         }
@@ -26,38 +26,40 @@ namespace ScoreboardServer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
-            var players = await _service.GetAllPlayers(offset, limit);
-            return Ok(players);
+            var games = await _service.GetAllGames(offset, limit);
+            return Ok(games);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var result = await _service.GetPlayerById(id);
+            var result = await _service.GetGameById(id);
             if (result == null)
             {
-                return NotFound("No player found");
+                return NotFound("No game found");
             }
             return Ok(result);
         }
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Player value)
+        public async Task<IActionResult> Post([FromBody]Game value)
         {
+            var userNameId = User.Claims.First(x => x.Type == "sub").Value;
+            value.UserId = userNameId;
             var id = await _service.Create(value);
-            return Created("/players/" + id, id);
+            return Created("/games/" + id, id);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Player value)
+        public async Task<IActionResult> Put(int id, [FromBody]Game value)
         {
             var result = await _service.Update(id, value);
             if (!result)
             {
-                return NotFound("No player found");
+                return NotFound("No game found");
             }
             return Ok();
         }
@@ -69,7 +71,7 @@ namespace ScoreboardServer.Controllers
             var result = await _service.Delete(id);
             if (!result)
             {
-                return NotFound("No player found");
+                return NotFound("No game found");
             }
             return Ok();
         }
