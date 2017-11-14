@@ -31,6 +31,21 @@ namespace ScoreboardServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMvc();
+            services.AddMvcCore()
+                .AddApiExplorer()
+                .AddAuthorization()
+                .AddJsonFormatters();
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+
+                    options.ApiName = "scoreboardapi";
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("scoreboard_server", new Info());
@@ -39,20 +54,6 @@ namespace ScoreboardServer
                     In = "header", Description = "Please insert JWT with Bearer into field", Name = "Authorization", Type = "apiKey"
                 });
             });
-
-            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
-
-           services.AddAuthentication("Bearer")
-                .AddCookie()
-                .AddIdentityServerAuthentication(options =>
-            {
-                options.Authority = "http://localhost:5000";
-                options.RequireHttpsMetadata = false;
-
-                options.ApiName = "scoreboardapi";
-            });
-
-            services.AddMvc();
 
             services.AddScoped<ITeamsService, TeamsService>();
             services.AddScoped<ITeamsRepository, TeamsRepository>();

@@ -22,11 +22,22 @@ namespace ScoreboardServer.Controllers
             _service = service;
         }
 
+        private string GetUserId()
+        {
+            string userId = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                userId = User.Claims.First(x => x.Type == "sub").Value;
+            }
+            return userId;
+        }
+
         // GET: api/values
         [HttpGet]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
-            var teams = await _service.GetAllTeams(offset, limit);
+            var userId = GetUserId();
+            var teams = await _service.GetAllTeams(offset, limit, userId);
             return Ok(teams);
         }
 
@@ -34,7 +45,8 @@ namespace ScoreboardServer.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var result = await _service.GetTeamById(id);
+            var userId = GetUserId();
+            var result = await _service.GetTeamById(id, userId);
             if (result == null)
             {
                 return NotFound("No team found");
@@ -46,6 +58,8 @@ namespace ScoreboardServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Team value)
         {
+            var userId = GetUserId();
+            value.ApplicationUserId = userId;
             var id = await _service.Create(value);
             return Created("/teams/" + id, id);
         }
@@ -54,7 +68,8 @@ namespace ScoreboardServer.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Team value)
         {
-            var result = await _service.Update(id, value);
+            var userId = GetUserId();
+            var result = await _service.Update(id, value, userId);
             if (!result)
             {
                 return NotFound("No team found");
@@ -66,7 +81,8 @@ namespace ScoreboardServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _service.Delete(id);
+            var userId = GetUserId();
+            var result = await _service.Delete(id, userId);
             if (!result)
             {
                 return NotFound("No team found");

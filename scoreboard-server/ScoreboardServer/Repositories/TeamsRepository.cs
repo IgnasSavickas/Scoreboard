@@ -21,13 +21,16 @@ namespace ScoreboardServer.Repositories
 
         public async Task<Team> GetById(int id)
         {
-            var team = await _teams.FindAsync(id);
+            var team = await _teams
+                .Include(x => x.Players)
+                .SingleAsync(x => x.Id == id);
             return team;
         }
 
         public async Task<ICollection<Team>> GetAll(int offset, int limit)
         {
             var teams = await _teams
+                .Include(x => x.Players)
                 .Skip(offset)
                 .Take(limit)
                 .ToArrayAsync();

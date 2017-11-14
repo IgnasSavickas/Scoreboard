@@ -8,10 +8,10 @@ namespace ScoreboardServer.Services
 {
     public interface IGamesService
     {
-        Task<Game> GetGameById(int id);
-        Task<ICollection<Game>> GetAllGames(int offset, int limit);
+        Task<Game> GetGameById(int id, string userId);
+        Task<ICollection<Game>> GetAllGames(int offset, int limit, string userId);
         Task<int> Create(Game team);
-        Task<bool> Update(int id, Game updatedTeam);
-        Task<bool> Delete(int id);
+        Task<bool> Update(int id, Game updatedTeam, string userId);
+        Task<bool> Delete(int id, string userId);
     }
 }

@@ -30,6 +30,7 @@ namespace ScoreboardServer.Repositories
 
         public async Task<ICollection<Game>> GetAll(int offset, int limit)
         {
+
             var games = await _games
                 .Include(x => x.HomeTeam)
                 .Include(x => x.VisitorTeam)
@@ -61,7 +62,8 @@ namespace ScoreboardServer.Repositories
 
         private static void MapUpdatedValues(Game existingGame, Game updatedGame)
         {
-            existingGame.DateCreated = updatedGame.DateCreated;
+            existingGame.StartDate = updatedGame.StartDate;
+            existingGame.EndDate = updatedGame.EndDate;
             existingGame.PeriodTime = updatedGame.PeriodTime;
             existingGame.Periods = updatedGame.Periods;
             existingGame.HomeTeamId = updatedGame.HomeTeamId;

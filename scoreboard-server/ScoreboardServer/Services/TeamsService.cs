@@ -16,16 +16,19 @@ namespace ScoreboardServer.Services
             _repository = repository;
         }
 
-        public async Task<Team> GetTeamById(int id)
+        public async Task<Team> GetTeamById(int id, string userId)
         {
             var team = await _repository.GetById(id);
-            return team;
+            return team.ApplicationUserId == userId ? team : null;
         }
 
-        public async Task<ICollection<Team>> GetAllTeams(int offset, int limit)
+        public async Task<ICollection<Team>> GetAllTeams(int offset, int limit, string userId)
         {
             var teams = await _repository.GetAll(offset, limit);
-            return teams;
+            var allUsersTeams = teams
+                .Where(x => x.ApplicationUserId == userId)
+                .ToList();
+            return allUsersTeams;
         }
 
         public async Task<int> Create(Team team)
@@ -34,9 +37,9 @@ namespace ScoreboardServer.Services
             return newId;
         }
 
-        public async Task<bool> Update(int id, Team updatedTeam)
+        public async Task<bool> Update(int id, Team updatedTeam, string userId)
         {
-            var existringTeam = await GetTeamById(id);
+            var existringTeam = await GetTeamById(id, userId);
             if (existringTeam == null)
             {
                 return false;
@@ -45,9 +48,9 @@ namespace ScoreboardServer.Services
             return true;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id, string userId)
         {
-            var existringTeam = await GetTeamById(id);
+            var existringTeam = await GetTeamById(id, userId);
             if (existringTeam == null)
             {
                 return false;
