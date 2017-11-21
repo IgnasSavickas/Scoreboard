@@ -21,10 +21,11 @@ namespace ScoreboardServer.Repositories
 
         public async Task<Game> GetById(int id)
         {
-            var game = await _games
+            Game game = null;
+            game = await _games
                 .Include(x => x.HomeTeam)
                 .Include(x => x.VisitorTeam)
-                .SingleAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             return game;
         }
 

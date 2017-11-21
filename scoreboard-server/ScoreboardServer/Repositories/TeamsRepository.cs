@@ -23,7 +23,7 @@ namespace ScoreboardServer.Repositories
         {
             var team = await _teams
                 .Include(x => x.Players)
-                .SingleAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
             return team;
         }
 

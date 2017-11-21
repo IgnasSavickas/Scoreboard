@@ -19,6 +19,10 @@ namespace ScoreboardServer.Services
         public async Task<Game> GetGameById(int id, string userId)
         {
             var game = await _repository.GetById(id);
+            if (game == null)
+            {
+                return null;
+            }
             return game.ApplicationUserId == userId ? game : null;
         }
 

@@ -83,6 +83,26 @@ namespace IdentityServerWithAspNetIdentity
                         "scoreboardapi"
                     },
                     AllowOfflineAccess = true
+                },
+
+                new Client
+                {
+                    ClientId = "ng",
+                    ClientName = "Scoreboard",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = true,
+
+                    RedirectUris = { "http://localhost:4200/callback" },
+                    PostLogoutRedirectUris = { "http://localhost:4200/home" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "scoreboardapi"
+                    }
                 }
             };
         }

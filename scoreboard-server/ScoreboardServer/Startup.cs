@@ -46,6 +46,16 @@ namespace ScoreboardServer
                     options.ApiName = "scoreboardapi";
                 });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("scoreboard_server", new Info());
@@ -71,6 +81,8 @@ namespace ScoreboardServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("default");
 
             app.UseAuthentication();
 

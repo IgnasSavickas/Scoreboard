@@ -22,7 +22,7 @@ namespace ScoreboardServer.Repositories
         public async Task<Player> GetById(int id)
         {
             var player = await _players
-                .SingleAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
             return player;
         }
 
