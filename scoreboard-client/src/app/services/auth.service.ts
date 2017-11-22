@@ -15,7 +15,7 @@ export class AuthService implements OnInit, OnDestroy {
     openIDImplicitFlowConfiguration.client_id = 'ng';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
     openIDImplicitFlowConfiguration.scope = 'openid profile scoreboardapi';
-    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'https://localhost:4200/home';
+    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'http://localhost:4200/home';
     openIDImplicitFlowConfiguration.start_checksession = true;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 0;

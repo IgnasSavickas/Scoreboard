@@ -9,7 +9,8 @@ import {AuthService} from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent },
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatToolbarModule
   ],
   providers: [
     OidcSecurityService,

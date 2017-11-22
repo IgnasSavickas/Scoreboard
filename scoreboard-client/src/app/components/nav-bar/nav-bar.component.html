@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+  <a mat-button routerLink="/home">Scoreboard</a>
+  <span class="spacer"></span>
+  <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
+  <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">Account</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</mat-toolbar>
