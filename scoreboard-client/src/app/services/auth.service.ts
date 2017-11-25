@@ -5,8 +5,6 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService implements OnInit, OnDestroy {
-  private isAuthorizedSubscription: Subscription;
-  private isAuthorized: boolean;
 
   constructor(public oidcSecurityService: OidcSecurityService) {
     const openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
@@ -19,8 +17,8 @@ export class AuthService implements OnInit, OnDestroy {
     openIDImplicitFlowConfiguration.start_checksession = true;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 0;
-    openIDImplicitFlowConfiguration.forbidden_route = '/Forbidden';
-    openIDImplicitFlowConfiguration.unauthorized_route = '/Unauthorized';
+    openIDImplicitFlowConfiguration.forbidden_route = '/forbidden';
+    openIDImplicitFlowConfiguration.unauthorized_route = '/unauthorized';
     openIDImplicitFlowConfiguration.auto_userinfo = true;
     openIDImplicitFlowConfiguration.log_console_warning_active = true;
     openIDImplicitFlowConfiguration.log_console_debug_active = false;
@@ -37,15 +35,9 @@ export class AuthService implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
-      (isAuthorized: boolean) => {
-        this.isAuthorized = isAuthorized;
-      });
-  }
+  ngOnInit() { }
 
   ngOnDestroy(): void {
-    this.isAuthorizedSubscription.unsubscribe();
     this.oidcSecurityService.onModuleSetup.unsubscribe();
   }
 
@@ -68,8 +60,16 @@ export class AuthService implements OnInit, OnDestroy {
     this.oidcSecurityService.logoff();
   }
 
+  getUserData(): Observable<any> {
+    return this.oidcSecurityService.getUserData();
+  }
+
+  handleError(error: any) {
+    this.oidcSecurityService.handleError(error);
+  }
+
   private doCallbackLogicIfRequired() {
-    if (typeof location !== 'undefined' && window.location.hash) {
+    if (window.location.hash) {
       this.oidcSecurityService.authorizedCallback();
     }
   }

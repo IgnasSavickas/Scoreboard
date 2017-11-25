@@ -2,8 +2,9 @@
   <a mat-button routerLink="/home">Scoreboard</a>
   <span class="spacer"></span>
   <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
-  <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">Account</button>
+  <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>
   <mat-menu #menu="matMenu">
+    <a mat-menu-item routerLink="/profile">Profile</a>
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
 </mat-toolbar>

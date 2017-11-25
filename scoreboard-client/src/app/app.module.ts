@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthModule, OidcSecurityService} from 'angular-auth-oidc-client';
 
 import { AppComponent } from './app.component';
@@ -11,12 +11,17 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import {IdentityService} from './services/identity.service';
+import { ProfileComponent } from './components/profile/profile.component';
+import {AuthInterceptor} from './auth-interceptor';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  {path: 'home', component: HomeComponent },
+  {path: 'home', component: HomeComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: '**', redirectTo: 'home'}
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
@@ -24,7 +29,9 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     UnauthorizedComponent,
-    NavBarComponent
+    NavBarComponent,
+    ProfileComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +46,13 @@ const appRoutes: Routes = [
   ],
   providers: [
     OidcSecurityService,
-    AuthService
+    AuthService,
+    IdentityService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
