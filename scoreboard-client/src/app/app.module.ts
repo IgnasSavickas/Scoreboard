@@ -9,17 +9,25 @@ import {AuthService} from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule, MatCheckboxModule, MatDialogModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {IdentityService} from './services/identity.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import {AuthInterceptor} from './auth-interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {TeamsComponent, TeamsDialogComponent} from './components/teams/teams.component';
+import {TeamsService} from './services/teams.service';
+import { CallbackComponent } from './components/callback/callback.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
+  {path: 'teams', component: TeamsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
+  {path: 'callback', component: CallbackComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
@@ -31,7 +39,10 @@ const appRoutes: Routes = [
     UnauthorizedComponent,
     NavBarComponent,
     ProfileComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CallbackComponent,
+    TeamsComponent,
+    TeamsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,18 +53,24 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatTableModule
   ],
   providers: [
     OidcSecurityService,
     AuthService,
     IdentityService,
+    TeamsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents : [TeamsDialogComponent]
 })
 export class AppModule { }

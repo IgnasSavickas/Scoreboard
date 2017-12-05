@@ -1,7 +1,12 @@
 .menu {
   padding: 0 15px;
+  font-family: ScoreBoard, sans-serif;
 }
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.basketball {
+  width: 40px;
 }

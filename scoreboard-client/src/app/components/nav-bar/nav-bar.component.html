@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
-  <a mat-button routerLink="/home">Scoreboard</a>
+  <a class="menu" mat-button routerLink="/home">
+    <img class="basketball" src="../../../assets/images/Basketball.svg">
+    Scoreboard
+  </a>
+  <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/teams">Teams</a>
   <span class="spacer"></span>
   <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
   <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>

@@ -1,2 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@font-face {
+  font-family: 'ScoreBoard';
+  src: url('/assets/webfont/ScoreBoard.eot?#iefix') format('embedded-opentype'),  url('/assets/webfont/ScoreBoard.woff') format('woff'),  url('/assets/webfont/ScoreBoard.ttf')  format('truetype'),  url('/assets/webfont/ScoreBoard.svg#ScoreBoard') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Digital-7MonoItalic';
+  src: url('/assets/webfont/Digital-7MonoItalic.eot?#iefix') format('embedded-opentype'),  url('/assets/webfont/Digital-7MonoItalic.woff') format('woff'), url('/assets/webfont/Digital-7MonoItalic.ttf')  format('truetype'), url('/assets/webfont/Digital-7MonoItalic.svg#Digital-7MonoItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Digital-7Mono';
+  src: url('/assets/webfont/Digital-7Mono.eot?#iefix') format('embedded-opentype'),  url('/assets/webfont/Digital-7Mono.woff') format('woff'), url('/assets/webfont/Digital-7Mono.ttf')  format('truetype'), url('/assets/webfont/Digital-7Mono.svg#Digital-7Mono') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
