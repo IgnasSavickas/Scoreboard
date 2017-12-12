@@ -1,6 +1,12 @@
+<app-header [titleName]="'Teams'" (dialogClosed)="addNewTeam($event)"></app-header>
 <p *ngIf="teams.length == 0">There is no teams.</p>
 <mat-nav-list>
-  <mat-list-item *ngFor="let team of teams" (click)="openDialog(team.id)">
+  <mat-list-item *ngFor="let team of teams" (click)="openDialog(team)">
     {{team.name}}
   </mat-list-item>
 </mat-nav-list>
+<mat-paginator [length]="teamsSize"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageEvent($event)">
+</mat-paginator>

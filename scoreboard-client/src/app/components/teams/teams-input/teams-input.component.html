@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div>
+  <form #teamInputForm="ngForm">
+    <div mat-dialog-content>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="team.name" id="name" name="teamName" required>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [disabled]="!teamInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+    </div>
+  </form>
+</div>

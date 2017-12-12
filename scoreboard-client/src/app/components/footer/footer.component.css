@@ -1,0 +1,24 @@
+.basketball {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.mat-toolbar {
+  height: 100px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+p {
+  font-weight: normal;
+}
+
+.author {
+  font-size: 16px;
+}
+
+.ktu {
+  font-size: 12px;
+}

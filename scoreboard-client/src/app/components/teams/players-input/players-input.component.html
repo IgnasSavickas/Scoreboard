@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<form #playerInputForm="ngForm">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput type="number" placeholder="#" [(ngModel)]="player.number" id="number" name="playerNumber" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Name" [(ngModel)]="player.name" id="name" name="playerName" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Surname" [(ngModel)]="player.surname" id="surname" name="playerSurname" required>
+    </mat-form-field>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="FGM" [(ngModel)]="player.fgm" id="fgm" name="playerFgm">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="FGA" [(ngModel)]="player.fga" id="fga" name="playerFga">
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="FTM" [(ngModel)]="player.ftm" id="ftm" name="playerFtm">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="FTA" [(ngModel)]="player.fta" id="fta" name="playerFta">
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="3FGM" [(ngModel)]="player.fgm3" id="fgm3" name="playerFgm3">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="3FGA" [(ngModel)]="player.fga3" id="fga3" name="playerFga3">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input matInput type="number" placeholder="PF" [(ngModel)]="player.pf" id="pf" name="playerPf">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="REB" [(ngModel)]="player.reb" id="reb" name="playerReb">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="AST" [(ngModel)]="player.ast" id="ast" name="playerAst">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="STL" [(ngModel)]="player.stl" id="stl" name="playerStl">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="BLK" [(ngModel)]="player.blk" id="blk" name="playerBlk">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="TO" [(ngModel)]="player.to" id="to" name="playerTo">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="!playerInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+  </div>
+</form>

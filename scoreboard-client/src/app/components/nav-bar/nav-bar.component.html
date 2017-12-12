@@ -1,14 +1,17 @@
-<mat-toolbar color="primary">
-  <a class="menu" mat-button routerLink="/home">
-    <img class="basketball" src="../../../assets/images/Basketball.svg">
-    Scoreboard
-  </a>
-  <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/teams">Teams</a>
-  <span class="spacer"></span>
-  <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
-  <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>
-  <mat-menu #menu="matMenu">
-    <a mat-menu-item routerLink="/profile">Profile</a>
-    <button mat-menu-item (click)="logout()">Logout</button>
-  </mat-menu>
-</mat-toolbar>
+<nav>
+  <mat-toolbar color="primary" role="navigation">
+    <a class="menu" mat-button routerLink="/home">
+      <img class="basketball" src="../../../assets/images/Basketball.svg">
+      Scoreboard
+    </a>
+    <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/teams">Teams</a>
+    <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/games">Games</a>
+    <span class="spacer"></span>
+    <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
+    <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item href="http://localhost:5000/Manage/Index">Manage</a>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+</nav>

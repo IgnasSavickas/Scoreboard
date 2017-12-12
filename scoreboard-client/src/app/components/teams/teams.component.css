@@ -1,0 +1,12 @@
+.action-buttons {
+  margin-top: 10px;
+}
+
+.mat-table {
+  overflow: auto;
+  min-width: 1008px;
+}
+
+.actions {
+  display: flex;
+}
