@@ -34,6 +34,7 @@ namespace ScoreboardServer.Controllers
 
         // GET: api/values
         [HttpGet]
+        [ProducesResponseType(typeof(Player), 200)]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
             var userId = GetUserId();
@@ -43,6 +44,7 @@ namespace ScoreboardServer.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Player), 200)]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var userId = GetUserId();

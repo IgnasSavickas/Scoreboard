@@ -35,6 +35,12 @@ namespace ScoreboardServer.Services
             return allUsersTeams;
         }
 
+        public async Task<int> GetSize()
+        {
+            var size = await _repository.GetSize();
+            return size;
+        }
+
         public async Task<int> Create(Team team)
         {
             var newId = await _repository.Create(team);

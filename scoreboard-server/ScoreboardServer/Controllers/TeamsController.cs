@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
@@ -34,6 +35,7 @@ namespace ScoreboardServer.Controllers
 
         // GET: api/values
         [HttpGet]
+        [ProducesResponseType(typeof(Team), 200)]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
             var userId = GetUserId();
@@ -43,6 +45,7 @@ namespace ScoreboardServer.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Team), 200)]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var userId = GetUserId();
@@ -52,6 +55,13 @@ namespace ScoreboardServer.Controllers
                 return NotFound("No team found");
             }
             return Ok(result);
+        }
+
+        [HttpGet("size")]
+        public async Task<IActionResult> GetSize()
+        {
+            var size = await _service.GetSize();
+            return Ok(size);
         }
 
         // POST api/values

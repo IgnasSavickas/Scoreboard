@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ScoreboardServer.Database;
@@ -85,6 +88,16 @@ namespace ScoreboardServer
             app.UseAuthentication();
 
             app.UseCors("default");
+
+            var imagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "images");
+            Directory.CreateDirectory(imagesDirectoryPath);
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    imagesDirectoryPath),
+                RequestPath = new PathString("/images")
+            });
 
             app.UseMvc();
 

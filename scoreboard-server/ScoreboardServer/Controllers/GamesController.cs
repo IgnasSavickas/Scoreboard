@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
 
@@ -35,6 +36,7 @@ namespace ScoreboardServer.Controllers
 
         // GET: api/values
         [HttpGet]
+        [ProducesResponseType(typeof(Game), 200)]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
             var userId = GetUserId();
@@ -44,6 +46,7 @@ namespace ScoreboardServer.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Game), 200)]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var userId = GetUserId();
