@@ -21,8 +21,7 @@ namespace ScoreboardServer.Repositories
 
         public async Task<Game> GetById(int id)
         {
-            Game game = null;
-            game = await _games
+            var game = await _games
                 .Include(x => x.HomeTeam)
                 .Include(x => x.VisitorTeam)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -67,8 +66,8 @@ namespace ScoreboardServer.Repositories
             existingGame.EndDate = updatedGame.EndDate;
             existingGame.PeriodTime = updatedGame.PeriodTime;
             existingGame.Periods = updatedGame.Periods;
-            existingGame.HomeTeamId = updatedGame.HomeTeamId;
-            existingGame.VisitorTeamId = updatedGame.VisitorTeamId;
+            //existingGame.HomeTeamId = updatedGame.HomeTeamId;
+            //existingGame.VisitorTeamId = updatedGame.VisitorTeamId;
         }
     }
 }
