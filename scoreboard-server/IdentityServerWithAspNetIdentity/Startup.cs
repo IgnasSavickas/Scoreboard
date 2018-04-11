@@ -17,19 +17,21 @@ namespace IdentityServerWithAspNetIdentity
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("identity_server", new Info());
+                c.SwaggerDoc("v1", new Info { Title = "Identity Server API", Version = "v1" });
             });
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
@@ -43,14 +45,32 @@ namespace IdentityServerWithAspNetIdentity
 
             services.AddMvc();
 
-            // configure identity server with in-memory stores, keys, clients and scopes
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
+            var builder = services.AddIdentityServer(options =>
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
+
+            if (Environment.IsDevelopment())
+            {
+                builder.AddDeveloperSigningCredential();
+            }
+            else
+            {
+                throw new Exception("need to configure key material");
+            }
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -84,19 +104,13 @@ namespace IdentityServerWithAspNetIdentity
             // app.UseAuthentication(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
 
-            const string swaggerUrl = "/swagger/identity_server/swagger.json";
+            const string swaggerUrl = "/swagger/v1/swagger.json";
             app.UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.DocExpansion("none");
-                    c.SwaggerEndpoint(swaggerUrl, "Identity Server");
+                    c.SwaggerEndpoint(swaggerUrl, "Identity Server API V1");
                 });
         }
     }

@@ -11,11 +11,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using IdentityServerWithAspNetIdentity.Models;
-using IdentityServerWithAspNetIdentity.Models.AccountViewModels;
 using IdentityServerWithAspNetIdentity.Services;
-using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using IdentityServerWithAspNetIdentity.Extensions;
+using IdentityServerWithAspNetIdentity.Models.InputModels;
+using IdentityServerWithAspNetIdentity.Models.ViewModels.Account;
 using Microsoft.AspNetCore.Http;
 
 namespace IdentityServerWithAspNetIdentity.Controllers

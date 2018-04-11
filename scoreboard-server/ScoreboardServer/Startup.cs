@@ -61,7 +61,7 @@ namespace ScoreboardServer
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("scoreboard_server", new Info());
+                c.SwaggerDoc("v1", new Info { Title = "Scoreboard Server API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     In = "header", Description = "Please insert JWT with Bearer into field", Name = "Authorization", Type = "apiKey"
@@ -101,12 +101,11 @@ namespace ScoreboardServer
 
             app.UseMvc();
 
-            const string swaggerUrl = "/swagger/scoreboard_server/swagger.json";
+            const string swaggerUrl = "/swagger/v1/swagger.json";
             app.UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.DocExpansion("none");
-                    c.SwaggerEndpoint(swaggerUrl, "Scoreboard Server");
+                    c.SwaggerEndpoint(swaggerUrl, "Scoreboard Server API V1");
                 });
         }
     }

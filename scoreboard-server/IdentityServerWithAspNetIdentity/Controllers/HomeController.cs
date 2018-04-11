@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IdentityServerWithAspNetIdentity.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Quickstart.UI;
+using IdentityServerWithAspNetIdentity.Models.ViewModels;
 
 namespace IdentityServerWithAspNetIdentity.Controllers
 {
