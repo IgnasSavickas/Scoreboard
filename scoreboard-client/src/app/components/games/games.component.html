@@ -1,4 +1,12 @@
 <app-header [titleName]="'Games'" (dialogClosed)="addNewTeam($event)"></app-header>
-<p>
-  games works!
-</p>
+<p *ngIf="games.length == 0">There is no games.</p>
+<mat-nav-list>
+  <mat-list-item *ngFor="let game of games" (click)="openDialog(game)">
+    {{game.homeTeam.name}} {{game.visitorTeam.name}}
+  </mat-list-item>
+</mat-nav-list>
+<mat-paginator [length]="gamesSize"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageEvent($event)">
+</mat-paginator>
