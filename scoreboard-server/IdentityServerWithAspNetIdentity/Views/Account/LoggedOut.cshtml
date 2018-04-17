@@ -14,15 +14,16 @@
 
     @if (Model.PostLogoutRedirectUri != null)
     {
+        <h2>Redirecting...</h2>
         <div>
-            Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the
+            If you are not redirected in 3 seconds, click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the
             <span>@Model.ClientName</span> application.
         </div>
     }
 
     @if (Model.SignOutIframeUrl != null)
     {
-        <iframe width="0" height="0" class="signout" style="display: none" src="@Model.SignOutIframeUrl"></iframe>
+        <iframe class="signout" style="display: none" src="@Model.SignOutIframeUrl"></iframe>
     }
 </div>
 

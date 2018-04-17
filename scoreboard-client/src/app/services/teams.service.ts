@@ -11,7 +11,7 @@ export class TeamsService {
 
   constructor(private http: HttpClient) { }
 
-  getTeams(offset: number, limit: number): Observable<Team[]> {
+  getTeams(offset?: number, limit?: number): Observable<Team[]> {
     return this.http.get<Team[]>(`${this.teamsApiUrl}?offset=${offset}&limit=${limit}`);
   }
 
