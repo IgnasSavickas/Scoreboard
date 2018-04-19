@@ -60,6 +60,7 @@ namespace ScoreboardServer.Repositories
             existingPlayer.Number = updatedPlayer.Number;
             existingPlayer.Name = updatedPlayer.Name;
             existingPlayer.Surname = updatedPlayer.Surname;
+            existingPlayer.PhotoPath = updatedPlayer.PhotoPath;
             existingPlayer.Fgm = updatedPlayer.Fgm;
             existingPlayer.Fga = updatedPlayer.Fga;
             existingPlayer.Ftm = updatedPlayer.Ftm;

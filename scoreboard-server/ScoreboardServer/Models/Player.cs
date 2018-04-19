@@ -11,6 +11,7 @@ namespace ScoreboardServer.Models
         public int Number { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string PhotoPath { get; set; }
         public int Fgm { get; set; }
         public int Fga { get; set; }
         public int Ftm { get; set; }

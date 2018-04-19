@@ -11,6 +11,7 @@ using ScoreboardServer.Services;
 
 namespace ScoreboardServer.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [Authorize]
     public class PlayersController : Controller

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ScoreboardServer.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [Authorize]
     public class IdentityController : Controller

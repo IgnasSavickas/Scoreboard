@@ -66,7 +66,7 @@ namespace ScoreboardServer.Repositories
         private static void MapUpdatedValues(Team existingTeam, Team updatedTeam)
         {
             existingTeam.Name = updatedTeam.Name;
-            existingTeam.Points = updatedTeam.Points;
+            existingTeam.LogoPath = updatedTeam.LogoPath;
         }
     }
 }

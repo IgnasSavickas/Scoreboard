@@ -74,6 +74,7 @@ namespace ScoreboardServer
             services.AddScoped<IPlayersRepository, PlayersRepository>();
             services.AddScoped<IGamesService, GamesService>();
             services.AddScoped<IGamesRepository, GamesRepository>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
         }
 
