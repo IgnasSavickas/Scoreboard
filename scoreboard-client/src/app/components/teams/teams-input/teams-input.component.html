@@ -5,6 +5,9 @@
       <mat-form-field>
         <input matInput placeholder="Name" [(ngModel)]="team.name" id="name" name="teamName" required>
       </mat-form-field>
+      <div>
+        <input placeholder="Image" type="file" (change)="onFileSelected($event)">
+      </div>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button [disabled]="!teamInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>

@@ -3,6 +3,9 @@
 <mat-nav-list>
   <mat-list-item *ngFor="let team of teams" (click)="openDialog(team)">
     {{team.name}}
+    <div class="logo">
+      <img *ngIf="team.logoPath" src="{{getImageUrl(team.logoPath)}}">
+    </div>
   </mat-list-item>
 </mat-nav-list>
 <mat-paginator [length]="teamsSize"

@@ -10,3 +10,13 @@
 .actions {
   display: flex;
 }
+
+.logo {
+  height: 40px;
+  margin-left: auto;
+}
+
+.logo img {
+  max-height: 100%;
+  max-width: 100%;
+}

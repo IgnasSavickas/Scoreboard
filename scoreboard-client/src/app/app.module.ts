@@ -12,7 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatSelectModule,
+  MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
   MatTableModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
@@ -32,6 +32,7 @@ import {PlayersService} from './services/players.service';
 import { GamesComponent } from './components/games/games.component';
 import {GamesService} from './services/games.service';
 import { GamesInputComponent } from './components/games/games-input/games-input.component';
+import {FileUploadService} from './services/file-upload.service';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -80,7 +81,8 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule
   ],
   providers: [
     OidcSecurityService,
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
     TeamsService,
     PlayersService,
     GamesService,
+    FileUploadService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
