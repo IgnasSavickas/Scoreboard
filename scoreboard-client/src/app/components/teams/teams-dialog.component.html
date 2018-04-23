@@ -1,4 +1,7 @@
-<h1 mat-dialog-title>{{team.name}}</h1>
+<div class="dialog-title">
+  <img *ngIf="team.logoPath" src="{{getImageUrl(team.logoPath)}}">
+  <h1 mat-dialog-title>{{team.name}}</h1>
+</div>
 <div mat-dialog-content>
   <mat-table #table [dataSource]="dataSource">
 
@@ -80,7 +83,7 @@
     <mat-icon aria-label="Edit" matTooltip="Edit team" (click)="updateTeam()">edit</mat-icon>
   </button>
   <button mat-mini-fab color="warn" (click)="deleteTeam()">
-    <mat-icon aria-label="Deleter" matTooltip="Delete team">delete</mat-icon>
+    <mat-icon aria-label="Delete" matTooltip="Delete team">delete</mat-icon>
   </button>
   <button mat-mini-fab (click)="addPlayer()">
     <mat-icon aria-label="Add" matTooltip="Add player">add</mat-icon>

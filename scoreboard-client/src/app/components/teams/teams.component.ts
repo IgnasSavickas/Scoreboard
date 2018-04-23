@@ -64,7 +64,7 @@ export class TeamsComponent implements OnInit {
       data: {team: team}
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         const index = this.teams.indexOf(result);
         if (index !== -1) {
           this.teams.splice(index, 1);
@@ -104,7 +104,8 @@ export class TeamsDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<TeamsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private teamsService: TeamsService,
-              private playersService: PlayersService, public dialog: MatDialog, private fileUploadService: FileUploadService) {
+              private playersService: PlayersService, private fileUploadService: FileUploadService, public dialog: MatDialog,
+              public snackBar: MatSnackBar) {
     this.team = data.team;
     this.dataSource.data = this.team.players;
   }
@@ -122,8 +123,11 @@ export class TeamsDialogComponent {
       data: { team: this.team, title: 'Update Team', buttonText: 'Update' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         this.teamsService.updateTeam(result.id, result).subscribe(() => {
+          this.snackBar.open('Team \'' + this.team.name + '\' updated', null, {
+            duration: 3000
+          });
           console.log('updated team!');
         }, error => {
           console.log(error);
@@ -137,7 +141,7 @@ export class TeamsDialogComponent {
       data: { player: new Player(), teamId: this.team.id, title: 'Add Player', buttonText: 'Add' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         this.playersService.addPlayer(result).subscribe(() => {
           this.dialogRef.close();
         }, error => {
@@ -160,7 +164,7 @@ export class TeamsDialogComponent {
       data: { player: player, teamId: player.teamId, title: 'Update Player', buttonText: 'Update' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         this.playersService.updateTeam(result.id, result).subscribe(() => {
         }, error => {
           console.log(error);

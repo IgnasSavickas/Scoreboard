@@ -5,8 +5,17 @@
       <mat-form-field>
         <input matInput placeholder="Name" [(ngModel)]="team.name" id="name" name="teamName" required>
       </mat-form-field>
-      <div>
-        <input placeholder="Image" type="file" (change)="onFileSelected($event)">
+      <div class="file-upload">
+        <button mat-raised-button color="primary" (click)="fileUpload.click()">Upload Logo</button>
+        <input placeholder="Image" type="file" accept="image/*" (change)="onFileSelected($event)" #fileUpload>
+        <div *ngIf="imagePreviewUrl" class="image-preview">
+          <div class="delete-image">
+            <button mat-icon-button color="warn" (click)="onDeleteClick()">
+              <mat-icon aria-label="Remove" matTooltip="Remove logo">clear</mat-icon>
+            </button>
+          </div>
+          <img [src]="imagePreviewUrl" alt="Logo Preview">
+        </div>
       </div>
     </div>
     <div mat-dialog-actions>

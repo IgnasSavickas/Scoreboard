@@ -61,7 +61,8 @@ namespace ScoreboardServer.Controllers
         [HttpGet("size")]
         public async Task<IActionResult> GetSize()
         {
-            var size = await _service.GetSize();
+            var userId = GetUserId();
+            var size = await _service.GetSize(userId);
             return Ok(size);
         }
 

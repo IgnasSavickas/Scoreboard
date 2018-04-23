@@ -20,3 +20,20 @@
   max-height: 100%;
   max-width: 100%;
 }
+
+.dialog-title {
+  height: 50px;
+}
+
+.dialog-title img {
+  max-height: 100%;
+  max-width: 100%;
+  float: left;
+}
+
+.dialog-title h1 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  top: 10px;
+}

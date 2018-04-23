@@ -27,19 +27,22 @@ namespace ScoreboardServer.Repositories
             return team;
         }
 
-        public async Task<ICollection<Team>> GetAll(int offset, int limit)
+        public async Task<ICollection<Team>> GetAll(int offset, int limit, string userId)
         {
             var teams = await _teams
                 .Include(x => x.Players)
+                .Where(x => x.ApplicationUserId == userId)
                 .Skip(offset)
                 .Take(limit)
                 .ToArrayAsync();
             return teams;
         }
 
-        public async Task<int> GetSize()
+        public async Task<int> GetSize(string userId)
         {
-            var size = await _teams.CountAsync();
+            var size = await _teams
+                .Where(x => x.ApplicationUserId == userId)
+                .CountAsync();
             return size;
         }
 

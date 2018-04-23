@@ -28,16 +28,13 @@ namespace ScoreboardServer.Services
 
         public async Task<ICollection<Team>> GetAllTeams(int offset, int limit, string userId)
         {
-            var teams = await _repository.GetAll(offset, limit);
-            var allUsersTeams = teams
-                .Where(x => x.ApplicationUserId == userId)
-                .ToList();
+            var allUsersTeams = await _repository.GetAll(offset, limit, userId);
             return allUsersTeams;
         }
 
-        public async Task<int> GetSize()
+        public async Task<int> GetSize(string userId)
         {
-            var size = await _repository.GetSize();
+            var size = await _repository.GetSize(userId);
             return size;
         }
 

@@ -1,0 +1,19 @@
+.file-upload {
+  margin-bottom: 10px;
+}
+
+.file-upload input {
+  display: none;
+}
+
+.image-preview img {
+  height: 70px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.delete-image {
+  position: absolute;
+  margin-top: 10px;
+  z-index: 2;
+}

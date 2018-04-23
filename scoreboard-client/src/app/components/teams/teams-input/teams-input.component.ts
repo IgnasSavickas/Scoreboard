@@ -15,14 +15,18 @@ export class TeamsInputComponent implements OnInit {
   team: Team;
   title: string;
   buttonText: string;
-  selectedFile: File = null;
+  selectedFile: File;
+  imagePreviewUrl: string;
 
   constructor(private fileUploadService: FileUploadService, public dialogRef: MatDialogRef<TeamsInputComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (data !== null) {
+    if (data) {
       this.team = data.team;
       this.title = data.title;
       this.buttonText = data.buttonText;
+      if (this.team.logoPath) {
+        this.imagePreviewUrl = fileUploadService.getFileUrl(this.team.logoPath);
+      }
     }
   }
 
@@ -30,11 +34,24 @@ export class TeamsInputComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      this.selectedFile = selectedFile;
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(selectedFile);
+      fileReader.onload = (e: any) => {
+        this.imagePreviewUrl = e.target.result;
+      };
+    }
+  }
+
+  onDeleteClick() {
+    this.imagePreviewUrl = undefined;
+    this.selectedFile = undefined;
   }
 
   onButtonClick() {
-    if (this.selectedFile !== null) {
+    if (this.selectedFile) {
       this.fileUploadService.uploadFile(this.selectedFile).subscribe(event => {
         if (event instanceof HttpResponse) {
           if (event.ok) {
