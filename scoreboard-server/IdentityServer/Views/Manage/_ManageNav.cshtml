@@ -1,0 +1,16 @@
+﻿@using IdentityServer.Views.Manage
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<div class="list-group">
+    <a asp-action="Index" class="list-group-item list-group-item-action @ManageNavPages.IndexNavClass(ViewContext)">Profile</a>
+    <a asp-action="ChangePassword" class="list-group-item list-group-item-action @ManageNavPages.ChangePasswordNavClass(ViewContext)">Password</a>
+    @if (hasExternalLogins)
+    {
+        <a asp-action="ExternalLogins" class="list-group-item list-group-item-action @ManageNavPages.ExternalLoginsNavClass(ViewContext)">External logins</a>
+    }
+    <a asp-action="TwoFactorAuthentication" class="list-group-item list-group-item-action @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)">Two-factor authentication</a>
+</div>
+

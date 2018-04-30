@@ -1,0 +1,17 @@
+{
+  "name": "identityserver",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Ignas Savickas",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-material-design": "^4.1.1",
+    "bootstrap-material-design-icons": "^2.2.0",
+    "bootstrap-social": "^5.1.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "jquery-validation": "^1.17.0",
+    "jquery-validation-unobtrusive": "^3.2.9",
+    "popper.js": "^1.14.3"
+  }
+}
