@@ -6,7 +6,7 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<p class="lead">Use this area to provide user claims.</p>
 
 <dl>
     @foreach (var claim in User.Claims)
@@ -15,12 +15,4 @@
         <dd>@claim.Value</dd>
 
     }
-    <dt>id token</dt>
-    <dd>@await ViewContext.HttpContext.GetTokenAsync("id_token")</dd>
-
-    <dt>access token</dt>
-    <dd>@await ViewContext.HttpContext.GetTokenAsync("access_token")</dd>
-
-    <dt>refresh token</dt>
-    <dd>@await ViewContext.HttpContext.GetTokenAsync("refresh_token")</dd>
 </dl>

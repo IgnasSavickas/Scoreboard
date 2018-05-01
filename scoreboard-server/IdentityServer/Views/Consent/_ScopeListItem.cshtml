@@ -3,8 +3,7 @@
 
 <div class="checkbox">
     <label>
-        <input class="consent-scopecheck"
-               type="checkbox"
+        <input type="checkbox"
                name="ScopesConsented"
                id="scopes_@Model.Name"
                value="@Model.Name"
@@ -28,7 +27,7 @@
     }
     @if (Model.Description != null)
     {
-        <div class="consent-description">
+        <div>
             <label for="scopes_@Model.Name">@Model.Description</label>
         </div>
     }
