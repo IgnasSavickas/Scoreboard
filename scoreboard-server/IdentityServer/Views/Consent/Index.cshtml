@@ -23,7 +23,7 @@
         <div class="col-sm-8">
             @Html.Partial("_ValidationSummary")
 
-            <form asp-action="Index" class="consent-form">
+            <form asp-action="Index">
                 <input type="hidden" asp-for="ReturnUrl" />
 
                 <p class="lead">Uncheck the permissions you do not wish to grant.</p>
@@ -71,8 +71,8 @@
                 }
 
                 <div class="form-group">
-                    <button name="button" value="yes" class="btn btn-raised btn-primary" autofocus>Yes, Allow</button>
-                    <button name="button" value="no" class="btn btn-raised">No, Do Not Allow</button>
+                    <button type="submit" name="button" value="yes" class="btn btn-raised btn-primary" autofocus>Yes, Allow</button>
+                    <button type="submit" name="button" value="no" class="btn btn-raised">No, Do Not Allow</button>
                     @if (Model.ClientUrl != null)
                     {
                         <a class="pull-right btn btn-raised btn-primary" target="_blank" href="@Model.ClientUrl">

@@ -304,7 +304,13 @@ namespace IdentityServer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
+            var providerToLower = provider.ToLower();
             // Request a redirect to the external login provider.
+            if (providerToLower.Contains("<span"))
+            {
+                var index = providerToLower.IndexOf("</span>", StringComparison.Ordinal);
+                provider = provider.Substring(index + 7);
+            }
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);

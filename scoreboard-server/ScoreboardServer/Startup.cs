@@ -44,7 +44,6 @@ namespace ScoreboardServer
                 });
             });
 
-            //services.AddMvc();
             services.AddMvcCore()
                 .AddApiExplorer()
                 .AddAuthorization()
@@ -62,10 +61,18 @@ namespace ScoreboardServer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Scoreboard Server API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                c.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
-                    In = "header", Description = "Please insert JWT with Bearer into field", Name = "Authorization", Type = "apiKey"
+                    Type = "oauth2",
+                    Flow = "implicit",
+                    AuthorizationUrl = "http://localhost:5000/connect/authorize",
+                    TokenUrl = "http://localhost:5000/connect/token",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        { "scoreboardapi", "Scoreboard API" }
+                    }
                 });
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
             services.AddScoped<ITeamsService, TeamsService>();
@@ -107,6 +114,7 @@ namespace ScoreboardServer
                 .UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint(swaggerUrl, "Scoreboard Server API V1");
+                    c.OAuthClientId("swaggerui");
                 });
         }
     }

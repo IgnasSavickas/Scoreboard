@@ -59,32 +59,6 @@ namespace IdentityServer
                     AllowedScopes = { "scoreboardapi" }
                 },
 
-                // OpenID Connect hybrid flow and client credentials client (MVC)
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-
-                    RequireConsent = true,
-
-                    ClientSecrets = 
-                    {
-                        new Secret("secret".Sha256())
-                    },
-
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "scoreboardapi"
-                    },
-                    AllowOfflineAccess = true
-                },
-
                 new Client
                 {
                     ClientId = "ng",
@@ -103,6 +77,45 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         "scoreboardapi"
                     }
+                },
+
+                new Client
+                {
+                    ClientId = "swaggerui",
+                    ClientName = "Scoreboard Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { "http://localhost:5001/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { "http://localhost:5000/swagger" },
+                    AllowedCorsOrigins = { "http://localhost:5001" },
+
+                    AllowedScopes =
+                    {
+                        "scoreboardapi"
+                    }
+                },
+
+                new Client
+                {
+                    ClientId = "windowsform",
+                    ClientName = "Scoreboard Windows Form",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequireConsent = false,
+
+                    ClientSecrets =
+                    {
+                        new Secret("windowsformsecret".Sha256())
+                    },
+
+                    RedirectUris = { "http://localhost:5000/oauth20_desktop" },
+
+                    AllowedScopes =
+                    {
+                        "scoreboardapi"
+                    },
+
+                    AllowOfflineAccess = true
                 }
             };
         }

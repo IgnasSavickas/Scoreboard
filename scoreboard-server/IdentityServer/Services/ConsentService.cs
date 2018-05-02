@@ -37,12 +37,12 @@ namespace IdentityServer.Services
             ConsentResponse grantedConsent = null;
 
             // user clicked 'no' - send back the standard 'access_denied' response
-            if (model.Button == "no")
+            if (model.Button == "no" || model.Button == "No, Do Not Allow")
             {
                 grantedConsent = ConsentResponse.Denied;
             }
             // user clicked 'yes' - validate the data
-            else if (model.Button == "yes" && model != null)
+            else if (model.Button == "yes" || model.Button == "Yes, Allow")
             {
                 // if the user consented to some scope, build the response model
                 if (model.ScopesConsented != null && model.ScopesConsented.Any())

@@ -35,11 +35,10 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
-        <div class="container">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
-                <img src="~/images/Basketball.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-                Scoreboard Identity
-            </a>
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+            <img src="~/images/Basketball.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+            Scoreboard Identity
+        </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,7 +50,6 @@
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
-        </div>
     </nav>
     <div class="container">
         @RenderBody()
