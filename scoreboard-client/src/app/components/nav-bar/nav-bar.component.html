@@ -10,7 +10,7 @@
     <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
     <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item href="http://localhost:5000/Manage/Index">Manage</a>
+      <a mat-menu-item target="_blank" href="http://localhost:5000/Manage/Index">Manage</a>
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </mat-toolbar>
