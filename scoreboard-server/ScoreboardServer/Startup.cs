@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ScoreboardServer.Database;
 using ScoreboardServer.Repositories;
 using ScoreboardServer.Services;
@@ -47,7 +49,12 @@ namespace ScoreboardServer
             services.AddMvcCore()
                 .AddApiExplorer()
                 .AddAuthorization()
-                .AddJsonFormatters();
+                .AddJsonFormatters()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
@@ -81,8 +88,10 @@ namespace ScoreboardServer
             services.AddScoped<IPlayersRepository, PlayersRepository>();
             services.AddScoped<IGamesService, GamesService>();
             services.AddScoped<IGamesRepository, GamesRepository>();
+            services.AddScoped<IStatsService, StatsService>();
+            services.AddScoped<IStatsRepository, StatsRepository>();
             services.AddScoped<IFileUploadService, FileUploadService>();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

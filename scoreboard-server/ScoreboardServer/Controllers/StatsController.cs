@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ScoreboardServer.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
-    public class PlayersController : Controller
+    public class StatsController : Controller
     {
-        private readonly IPlayersService _service;
+        private readonly IStatsService _service;
 
-        public PlayersController(IPlayersService service)
+        public StatsController(IStatsService service)
         {
             _service = service;
         }
@@ -35,47 +32,46 @@ namespace ScoreboardServer.Controllers
 
         // GET: api/values
         [HttpGet]
-        [ProducesResponseType(typeof(Player), 200)]
+        [ProducesResponseType(typeof(Stats), 200)]
         public async Task<IActionResult> GetRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
         {
             var userId = GetUserId();
-            var players = await _service.GetAllPlayers(offset, limit, userId);
-            return Ok(players);
+            var stats = await _service.GetAllStats(offset, limit);
+            return Ok(stats);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Player), 200)]
+        [ProducesResponseType(typeof(Stats), 200)]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var userId = GetUserId();
-            var result = await _service.GetPlayerById(id, userId);
+            var result = await _service.GetStatsById(id);
             if (result == null)
             {
-                return NotFound("No player found");
+                return NotFound("No stats found");
             }
             return Ok(result);
         }
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Player value)
+        public async Task<IActionResult> Post([FromBody]Stats value)
         {
             var userId = GetUserId();
-            value.ApplicationUserId = userId;
             var id = await _service.Create(value);
-            return Created("/players/" + id, id);
+            return Created("/stats/" + id, id);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Player value)
+        public async Task<IActionResult> Put(int id, [FromBody]Stats value)
         {
             var userId = GetUserId();
-            var result = await _service.Update(id, value, userId);
+            var result = await _service.Update(id, value);
             if (!result)
             {
-                return NotFound("No player found");
+                return NotFound("No stats found");
             }
             return Ok();
         }
@@ -85,20 +81,12 @@ namespace ScoreboardServer.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userId = GetUserId();
-            var result = await _service.Delete(id, userId);
+            var result = await _service.Delete(id);
             if (!result)
             {
-                return NotFound("No player found");
+                return NotFound("No stats found");
             }
             return Ok();
-        }
-
-        [HttpGet("team/{id}")]
-        [ProducesResponseType(typeof(Player), 200)]
-        public async Task<IActionResult> GetAllByTeamId([FromRoute] int id)
-        {
-            var teamPlayers = await _service.GetPlayersByTeamId(id);
-            return Ok(teamPlayers);
         }
     }
 }

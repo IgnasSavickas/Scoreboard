@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ScoreboardServer.Models
 {
-    public class Team
+    public class League
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string LogoPath { get; set; }
-        public string ApplicationUserId { get; set; }
+        public string Title { get; set; }
+        public bool Public { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace ScoreboardServer.Repositories
         public async Task<Team> GetById(int id)
         {
             var team = await _teams
-                .Include(x => x.Players)
                 .SingleOrDefaultAsync(x => x.Id == id);
             return team;
         }
@@ -30,7 +29,6 @@ namespace ScoreboardServer.Repositories
         public async Task<ICollection<Team>> GetAll(int offset, int limit, string userId)
         {
             var teams = await _teams
-                .Include(x => x.Players)
                 .Where(x => x.ApplicationUserId == userId)
                 .Skip(offset)
                 .Take(limit)

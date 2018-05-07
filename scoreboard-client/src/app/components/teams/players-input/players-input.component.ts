@@ -32,7 +32,7 @@ export class PlayersInputComponent implements OnInit {
     playerResult.number = this.player.number;
     playerResult.name = this.player.name;
     playerResult.surname = this.player.surname;
-    playerResult.fgm = this.player.fgm;
+    /*playerResult.fgm = this.player.fgm;
     playerResult.fga = this.player.fga;
     playerResult.ftm = this.player.ftm;
     playerResult.fta = this.player.fta;
@@ -43,7 +43,7 @@ export class PlayersInputComponent implements OnInit {
     playerResult.ast = this.player.ast;
     playerResult.stl = this.player.stl;
     playerResult.blk = this.player.blk;
-    playerResult.to = this.player.to;
+    playerResult.to = this.player.to;*/
     playerResult.teamId = this.teamId;
     this.dialogRef.close(playerResult);
   }

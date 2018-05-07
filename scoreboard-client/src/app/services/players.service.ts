@@ -21,10 +21,14 @@ export class PlayersService {
     return this.http.delete(`${this.playersApiUrl}/${id}`, {responseType: 'text'});
   }
 
-  updateTeam(id: number, player: Player): Observable<string> {
+  updatePlayer(id: number, player: Player): Observable<string> {
     const body = JSON.stringify(player);
     return this.http.put(`${this.playersApiUrl}/${id}`, body, {headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'});
+  }
+
+  getTeamPlayers(teamId: number): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.playersApiUrl}/team/${teamId}`);
   }
 
 }

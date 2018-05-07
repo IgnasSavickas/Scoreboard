@@ -10,11 +10,22 @@ import { HomeComponent } from './components/home/home.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatButtonModule, MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule, MatNativeDateModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatTableModule,
-  MatToolbarModule, MatTooltipModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {IdentityService} from './services/identity.service';
@@ -82,7 +93,10 @@ const appRoutes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatCardModule
   ],
   providers: [
     OidcSecurityService,

@@ -13,5 +13,6 @@ namespace ScoreboardServer.Repositories
         Task<int> Create(Player newPlayer);
         Task Update(Player existringPlayer, Player updatedPlayer);
         Task Delete(Player deletedPlayer);
+        Task<ICollection<Player>> GetAllByTeamId(int teamId);
     }
 }

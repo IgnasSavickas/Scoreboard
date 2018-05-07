@@ -1,10 +1,4 @@
-import {Stats} from './stats';
-
-export class Player {
-  id: number;
-  number: number;
-  name: string;
-  surname: string;
+export class Stats {
   fgm = 0;
   fga = 0;
   ftm = 0;
@@ -20,6 +14,4 @@ export class Player {
   stl = 0;
   blk = 0;
   to = 0;
-  stats: Stats[];
-  teamId: number;
 }

@@ -55,27 +55,22 @@ namespace ScoreboardServer.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<ICollection<Player>> GetAllByTeamId(int teamId)
+        {
+            var players = await _players
+                .Include(x => x.Stats)
+                .Where(x => x.TeamId == teamId)
+                .ToArrayAsync();
+
+            return players;
+        }
+
         private static void MapUpdatedValues(Player existingPlayer, Player updatedPlayer)
         {
             existingPlayer.Number = updatedPlayer.Number;
             existingPlayer.Name = updatedPlayer.Name;
             existingPlayer.Surname = updatedPlayer.Surname;
             existingPlayer.PhotoPath = updatedPlayer.PhotoPath;
-            existingPlayer.Fgm = updatedPlayer.Fgm;
-            existingPlayer.Fga = updatedPlayer.Fga;
-            existingPlayer.Ftm = updatedPlayer.Ftm;
-            existingPlayer.Fta = updatedPlayer.Fta;
-            existingPlayer.Fgm3 = updatedPlayer.Fgm3;
-            existingPlayer.Fga3 = updatedPlayer.Fga3;
-            existingPlayer.Fg = updatedPlayer.Fg;
-            existingPlayer.Ft = updatedPlayer.Ft;
-            existingPlayer.Fg3 = updatedPlayer.Fg3;
-            existingPlayer.Pf = updatedPlayer.Pf;
-            existingPlayer.Reb = updatedPlayer.Reb;
-            existingPlayer.Ast = updatedPlayer.Ast;
-            existingPlayer.Stl = updatedPlayer.Stl;
-            existingPlayer.Blk = updatedPlayer.Blk;
-            existingPlayer.To = updatedPlayer.To;
             existingPlayer.TeamId = updatedPlayer.TeamId;
         }
     }

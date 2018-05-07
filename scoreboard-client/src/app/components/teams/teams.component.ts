@@ -26,7 +26,7 @@ export class TeamsComponent implements OnInit {
   ngOnInit() {
     this.teamsService.getTeams(0, 10).subscribe(teams => {
       this.teams = teams;
-      console.log(teams);
+      console.log(this.teams);
     }, error => {
       console.log(error);
       this.authService.handleError(error);
@@ -97,8 +97,9 @@ export class TeamsComponent implements OnInit {
   templateUrl: './teams-dialog.component.html',
   styleUrls: ['./teams.component.css']
 })
-export class TeamsDialogComponent {
+export class TeamsDialogComponent implements OnInit {
   team: Team;
+  players: Player[] = [];
   displayedColumns = ['number', 'name', 'fgma', 'ftma', 'fgma3', 'pf', 'reb', 'ast', 'stl', 'blk', 'to', 'actions'];
   dataSource = new MatTableDataSource();
 
@@ -106,8 +107,18 @@ export class TeamsDialogComponent {
               @Inject(MAT_DIALOG_DATA) public data: any, private teamsService: TeamsService,
               private playersService: PlayersService, private fileUploadService: FileUploadService, public dialog: MatDialog,
               public snackBar: MatSnackBar) {
-    this.team = data.team;
-    this.dataSource.data = this.team.players;
+    this.team = Object.assign({}, data.team);
+  }
+
+  ngOnInit() {
+    this.playersService.getTeamPlayers(this.team.id).subscribe(players => {
+      console.log(players);
+      this.players = players;
+      console.log(this.players);
+      this.dataSource.data = this.players;
+    }, error => {
+      console.log(error);
+    });
   }
 
   deleteTeam() {
@@ -125,6 +136,10 @@ export class TeamsDialogComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.teamsService.updateTeam(result.id, result).subscribe(() => {
+          this.team = result;
+          this.data.team.id = result.id;
+          this.data.team.name = result.name;
+          this.data.team.logoPath = result.logoPath;
           this.snackBar.open('Team \'' + this.team.name + '\' updated', null, {
             duration: 3000
           });
@@ -142,8 +157,10 @@ export class TeamsDialogComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.playersService.addPlayer(result).subscribe(() => {
-          this.dialogRef.close();
+        this.playersService.addPlayer(result).subscribe(id => {
+          result.id = id;
+          this.players.push(result);
+          this.dataSource.data = this.players;
         }, error => {
           console.log(error);
         });
@@ -151,9 +168,14 @@ export class TeamsDialogComponent {
     });
   }
 
-  removePlayer(id: number) {
-    this.playersService.deletePlayer(id).subscribe(() => {
-      this.dialogRef.close();
+  removePlayer(player: Player) {
+    this.playersService.deletePlayer(player.id).subscribe(() => {
+      // this.dialogRef.close();
+      const index = this.players.indexOf(player);
+      if (index !== -1) {
+        this.players.splice(index, 1);
+        this.dataSource.data = this.players;
+      }
     }, error => {
       console.log(error);
     });
@@ -165,7 +187,7 @@ export class TeamsDialogComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.playersService.updateTeam(result.id, result).subscribe(() => {
+        this.playersService.updatePlayer(result.id, result).subscribe(() => {
         }, error => {
           console.log(error);
         });

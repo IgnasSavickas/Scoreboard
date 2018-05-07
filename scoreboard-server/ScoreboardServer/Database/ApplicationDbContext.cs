@@ -13,6 +13,8 @@ namespace ScoreboardServer.Database
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<Stats> Stats { get; set; }
+        public DbSet<League> Leagues { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

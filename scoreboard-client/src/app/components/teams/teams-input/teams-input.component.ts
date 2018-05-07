@@ -21,7 +21,7 @@ export class TeamsInputComponent implements OnInit {
   constructor(private fileUploadService: FileUploadService, public dialogRef: MatDialogRef<TeamsInputComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
-      this.team = data.team;
+      this.team = Object.assign({}, data.team);
       this.title = data.title;
       this.buttonText = data.buttonText;
       if (this.team.logoPath) {

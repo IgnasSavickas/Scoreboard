@@ -8,5 +8,7 @@ export class Game {
   periodTime: string;
   periods: number;
   homeTeam: Team;
+  homeTeamId: number;
   visitorTeam: Team;
+  visitorTeamId: number;
 }

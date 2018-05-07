@@ -13,9 +13,9 @@ namespace ScoreboardServer.Models
         public DateTime EndDate { get; set; }
         public string PeriodTime { get; set; }
         public int Periods { get; set; }
-        //public int HomeTeamId { get; set; }
+        public int HomeTeamId { get; set; }
         public Team HomeTeam { get; set; }
-        //public int VisitorTeamId { get; set; }
+        public int VisitorTeamId { get; set; }
         public Team VisitorTeam { get; set; }
         public int HomePoints { get; set; }
         public int VisitorPoints { get; set; }
