@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Title</h1>
+<form #playerInputForm="ngForm">
+  <div mat-dialog-content>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="FGM" [(ngModel)]="stats.fgm" id="fgm" name="playerFgm">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="FGA" [(ngModel)]="stats.fga" id="fga" name="playerFga">
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="FTM" [(ngModel)]="stats.ftm" id="ftm" name="playerFtm">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="FTA" [(ngModel)]="stats.fta" id="fta" name="playerFta">
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <input matInput type="number" placeholder="3FGM" [(ngModel)]="stats.fgm3" id="fgm3" name="playerFgm3">
+      </mat-form-field>
+      /
+      <mat-form-field>
+        <input matInput type="number" placeholder="3FGA" [(ngModel)]="stats.fga3" id="fga3" name="playerFga3">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input matInput type="number" placeholder="PF" [(ngModel)]="stats.pf" id="pf" name="playerPf">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="REB" [(ngModel)]="stats.reb" id="reb" name="playerReb">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="AST" [(ngModel)]="stats.ast" id="ast" name="playerAst">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="STL" [(ngModel)]="stats.stl" id="stl" name="playerStl">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="BLK" [(ngModel)]="stats.blk" id="blk" name="playerBlk">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="TO" [(ngModel)]="stats.to" id="to" name="playerTo">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="!playerInputForm.form.valid" (click)="onButtonClick()">Button</button>
+  </div>
+</form>

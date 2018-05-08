@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {TeamsInputComponent} from '../teams/teams-input/teams-input.component';
-import {Team} from '../../models/team';
-import {GamesInputComponent} from '../games/games-input/games-input.component';
-import {Game} from '../../models/game';
+import {TeamsInputComponent} from '../../teams/teams-input/teams-input.component';
+import {Team} from '../../../models/team';
+import {GamesInputComponent} from '../../games/games-input/games-input.component';
+import {Game} from '../../../models/game';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +12,7 @@ import {Game} from '../../models/game';
 })
 export class HeaderComponent implements OnInit {
   @Input() titleName: string;
+  @Input() addButton: boolean;
   @Output() dialogClosed = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog) { }

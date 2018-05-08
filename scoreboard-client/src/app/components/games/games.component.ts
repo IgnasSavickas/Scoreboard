@@ -3,6 +3,7 @@ import {Game} from '../../models/game';
 import {GamesService} from '../../services/games.service';
 import {AuthService} from '../../services/auth.service';
 import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-games',
@@ -15,7 +16,7 @@ export class GamesComponent implements OnInit {
   pageSize = 10;
   pageIndex: number;
 
-  constructor(private authService: AuthService, private gamesService: GamesService, public dialog: MatDialog,
+  constructor(private authService: AuthService, private gamesService: GamesService, private router: Router, public dialog: MatDialog,
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -62,6 +63,7 @@ export class GamesComponent implements OnInit {
     });
   }
 
-  openDialog() {}
-
+  onGameClick(game: Game) {
+    this.router.navigate(['/games', game.id]);
+  }
 }

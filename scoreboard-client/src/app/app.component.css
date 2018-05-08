@@ -12,3 +12,7 @@ app-footer {
   right: 0;
   bottom: 0;
 }
+
+.component {
+  padding-bottom: 100px;
+}

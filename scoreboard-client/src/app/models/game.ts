@@ -9,6 +9,8 @@ export class Game {
   periods: number;
   homeTeam: Team;
   homeTeamId: number;
+  homePoints = 0;
   visitorTeam: Team;
   visitorTeamId: number;
+  visitorPoints = 0;
 }

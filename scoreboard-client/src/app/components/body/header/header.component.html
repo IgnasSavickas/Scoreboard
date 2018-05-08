@@ -2,7 +2,7 @@
   <mat-toolbar color="primary">
     {{titleName}}
     <span class="spacer"></span>
-    <button *ngIf="titleName !== 'Home'" mat-mini-fab (click)="openDialog()">
+    <button *ngIf="addButton" mat-mini-fab (click)="openDialog()">
       <mat-icon aria-label="Add" matTooltip="Add {{titleName}}!">add</mat-icon>
     </button>
   </mat-toolbar>

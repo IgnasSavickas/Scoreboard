@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthService} from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
-import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { UnauthorizedComponent } from './components/auth/unauthorized/unauthorized.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCardModule,
@@ -27,28 +27,30 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NavBarComponent } from './components/body/nav-bar/nav-bar.component';
 import {IdentityService} from './services/identity.service';
 import {AuthInterceptor} from './auth-interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {TeamsComponent, TeamsDialogComponent} from './components/teams/teams.component';
 import {TeamsService} from './services/teams.service';
-import { CallbackComponent } from './components/callback/callback.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
+import { CallbackComponent } from './components/auth/callback/callback.component';
+import { FooterComponent } from './components/body/footer/footer.component';
+import { HeaderComponent } from './components/body/header/header.component';
 import { TeamsInputComponent } from './components/teams/teams-input/teams-input.component';
 import {FormsModule} from '@angular/forms';
 import { PlayersInputComponent } from './components/teams/players-input/players-input.component';
 import {PlayersService} from './services/players.service';
 import { GamesComponent } from './components/games/games.component';
 import {GamesService} from './services/games.service';
-import { GamesInputComponent } from './components/games/games-input/games-input.component';
+import {GamesInputComponent, StatsInputComponent} from './components/games/games-input/games-input.component';
 import {FileUploadService} from './services/file-upload.service';
+import { GamesDetailComponent } from './components/games/games-detail/games-detail.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'teams', component: TeamsComponent},
   {path: 'games', component: GamesComponent},
+  {path: 'games/:id', component: GamesDetailComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
   {path: 'callback', component: CallbackComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -70,7 +72,9 @@ const appRoutes: Routes = [
     TeamsInputComponent,
     PlayersInputComponent,
     GamesComponent,
-    GamesInputComponent
+    GamesInputComponent,
+    GamesDetailComponent,
+    StatsInputComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +121,8 @@ const appRoutes: Routes = [
     TeamsDialogComponent,
     TeamsInputComponent,
     PlayersInputComponent,
-    GamesInputComponent
+    GamesInputComponent,
+    StatsInputComponent
   ]
 })
 export class AppModule { }

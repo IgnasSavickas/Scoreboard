@@ -1,10 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Game} from '../../../models/game';
-import {TeamsInputComponent} from '../../teams/teams-input/teams-input.component';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar, MatTableDataSource} from '@angular/material';
 import {Team} from '../../../models/team';
 import {TeamsService} from '../../../services/teams.service';
 import {AuthService} from '../../../services/auth.service';
+import {PlayersService} from '../../../services/players.service';
+import {Player} from '../../../models/player';
+import {FileUploadService} from '../../../services/file-upload.service';
+import {TeamsDialogComponent} from '../../teams/teams.component';
+import {Stats} from '../../../models/stats';
+import {PlayersInputComponent} from '../../teams/players-input/players-input.component';
 
 @Component({
   selector: 'app-games-input',
@@ -17,7 +22,13 @@ export class GamesInputComponent implements OnInit {
   title: string;
   buttonText: string;
 
-  constructor(private teamService: TeamsService, private authService: AuthService, public dialogRef: MatDialogRef<TeamsInputComponent>,
+  displayedColumns = ['number', 'name', 'actions'];
+  dataSource = new MatTableDataSource();
+  dataSource2 = new MatTableDataSource();
+
+  constructor(private teamsService: TeamsService, private playersService: PlayersService, private authService: AuthService,
+              public dialog: MatDialog,
+              public dialogRef: MatDialogRef<GamesInputComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.game = Object.assign({}, data.game);
@@ -27,8 +38,8 @@ export class GamesInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.teamService.getTeamsSize().subscribe(size => {
-      this.teamService.getTeams(0, size).subscribe(teams => {
+    this.teamsService.getTeamsSize().subscribe(size => {
+      this.teamsService.getTeams(0, size).subscribe(teams => {
         this.teams = teams;
         console.log(teams);
       }, error => {
@@ -38,6 +49,38 @@ export class GamesInputComponent implements OnInit {
     }, error => {
       console.log(error);
       this.authService.handleError(error);
+    });
+  }
+
+  updateStats(player) {
+    const dialogRef = this.dialog.open(StatsInputComponent, {
+      data: { stats: new Stats(), title: 'Add Stats', buttonText: 'Add' }
+    });
+    /*dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.playersService.updatePlayer(result.id, result).subscribe(() => {
+        }, error => {
+          console.log(error);
+        });
+      }
+    });*/
+  }
+
+  onChange(change) {
+    this.playersService.getTeamPlayers(change.value.id).subscribe(players => {
+      console.log(players);
+      this.dataSource.data = players;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  onChange2(change) {
+    this.playersService.getTeamPlayers(change.value.id).subscribe(players => {
+      console.log(players);
+      this.dataSource2.data = players;
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -51,6 +94,26 @@ export class GamesInputComponent implements OnInit {
     gameResult.homeTeam = this.game.homeTeam;
     gameResult.visitorTeam = this.game.visitorTeam;
     this.dialogRef.close(gameResult);
+  }
+
+}
+
+@Component({
+  selector: 'app-stats-input',
+  templateUrl: './stats-input.component.html',
+  styleUrls: ['./games-input.component.css']
+})
+export class StatsInputComponent {
+  stats: Stats;
+
+  constructor(public dialogRef: MatDialogRef<TeamsDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any, private teamsService: TeamsService,
+              private playersService: PlayersService, private fileUploadService: FileUploadService, public dialog: MatDialog,
+              public snackBar: MatSnackBar) {
+    this.stats = data.stats;
+  }
+
+  onButtonClick() {
   }
 
 }

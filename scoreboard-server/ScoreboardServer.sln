@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoreboardServer", "ScoreboardServer\ScoreboardServer.csproj", "{E799B925-C412-492B-A5D8-D064F2331FFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA3D2D03-5B3F-496D-8832-7631B522E491} = {CA3D2D03-5B3F-496D-8832-7631B522E491}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{913BA068-EAE6-4B04-B597-3113B9B3A4F2}"
 EndProject

@@ -1,4 +1,4 @@
-<app-header [titleName]="'Teams'" (dialogClosed)="addNewTeam($event)"></app-header>
+<app-header [titleName]="'Teams'" [addButton]="true" (dialogClosed)="addNewTeam($event)"></app-header>
 <p *ngIf="teams.length == 0">There is no teams.</p>
 <mat-nav-list>
   <mat-list-item *ngFor="let team of teams" (click)="openDialog(team)">
