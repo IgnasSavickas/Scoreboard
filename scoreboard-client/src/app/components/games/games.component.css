@@ -1,0 +1,12 @@
+.logo {
+  height: 40px;
+}
+
+.logo img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.game {
+  margin: 0 10px;
+}

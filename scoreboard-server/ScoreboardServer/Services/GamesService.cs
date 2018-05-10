@@ -62,5 +62,17 @@ namespace ScoreboardServer.Services
             await _repository.Delete(existringGame);
             return true;
         }
+
+        public async Task<int> GetSize(string userId)
+        {
+            var size = await _repository.GetSize(userId);
+            return size;
+        }
+
+        public async Task<ICollection<Game>> GetGamesByTeamId(int teamId)
+        {
+            var teamGames = await _repository.GetAllByTeamId(teamId);
+            return teamGames;
+        }
     }
 }

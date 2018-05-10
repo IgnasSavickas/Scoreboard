@@ -48,6 +48,7 @@ export class TeamsInputComponent implements OnInit {
   onDeleteClick() {
     this.imagePreviewUrl = undefined;
     this.selectedFile = undefined;
+    this.team.logoPath = undefined;
   }
 
   onButtonClick() {

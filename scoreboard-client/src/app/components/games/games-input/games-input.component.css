@@ -1,3 +1,13 @@
 .input-row {
   flex-direction: row;
 }
+
+.mat-table {
+  overflow: auto;
+  min-width: 1008px;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+}

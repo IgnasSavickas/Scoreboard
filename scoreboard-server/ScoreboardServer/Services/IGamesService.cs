@@ -13,5 +13,7 @@ namespace ScoreboardServer.Services
         Task<int> Create(Game team);
         Task<bool> Update(int id, Game updatedTeam, string userId);
         Task<bool> Delete(int id, string userId);
+        Task<int> GetSize(string userId);
+        Task<ICollection<Game>> GetGamesByTeamId(int teamId);
     }
 }

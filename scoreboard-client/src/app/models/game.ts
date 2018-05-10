@@ -1,4 +1,5 @@
 import {Team} from './team';
+import {Stats} from './stats';
 
 export class Game {
   id: number;
@@ -13,4 +14,5 @@ export class Game {
   visitorTeam: Team;
   visitorTeamId: number;
   visitorPoints = 0;
+  stats: Stats[];
 }

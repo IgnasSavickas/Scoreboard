@@ -59,6 +59,14 @@ namespace ScoreboardServer.Controllers
             return Ok(result);
         }
 
+        [HttpGet("size")]
+        public async Task<IActionResult> GetSize()
+        {
+            var userId = GetUserId();
+            var size = await _service.GetSize(userId);
+            return Ok(size);
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Game value)
@@ -94,6 +102,14 @@ namespace ScoreboardServer.Controllers
                 return NotFound("No game found");
             }
             return Ok();
+        }
+
+        [HttpGet("team/{id}")]
+        [ProducesResponseType(typeof(Game), 200)]
+        public async Task<IActionResult> GetAllByTeamId([FromRoute] int id)
+        {
+            var teamGames = await _service.GetGamesByTeamId(id);
+            return Ok(teamGames);
         }
     }
 }

@@ -1,4 +1,5 @@
 export class Stats {
+  id: number;
   fgm = 0;
   fga = 0;
   ftm = 0;
@@ -14,4 +15,6 @@ export class Stats {
   stl = 0;
   blk = 0;
   to = 0;
+  playerId: number;
+  gameId: number;
 }

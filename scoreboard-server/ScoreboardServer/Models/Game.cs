@@ -19,6 +19,7 @@ namespace ScoreboardServer.Models
         public Team VisitorTeam { get; set; }
         public int HomePoints { get; set; }
         public int VisitorPoints { get; set; }
+        public List<Stats> Stats { get; set; }
         public string ApplicationUserId { get; set; }
     }
 }

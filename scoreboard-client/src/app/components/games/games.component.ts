@@ -4,6 +4,7 @@ import {GamesService} from '../../services/games.service';
 import {AuthService} from '../../services/auth.service';
 import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
 import {Router} from '@angular/router';
+import {FileUploadService} from '../../services/file-upload.service';
 
 @Component({
   selector: 'app-games',
@@ -16,13 +17,19 @@ export class GamesComponent implements OnInit {
   pageSize = 10;
   pageIndex: number;
 
-  constructor(private authService: AuthService, private gamesService: GamesService, private router: Router, public dialog: MatDialog,
-              public snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private gamesService: GamesService, private fileUploadService: FileUploadService,
+              private router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.gamesService.getGames(0, 10).subscribe(games => {
       this.games = games;
       console.log(games);
+    }, error => {
+      console.log(error);
+      this.authService.handleError(error);
+    });
+    this.gamesService.getGamesSize().subscribe(size => {
+      this.gamesSize = size;
     }, error => {
       console.log(error);
       this.authService.handleError(error);
@@ -65,5 +72,9 @@ export class GamesComponent implements OnInit {
 
   onGameClick(game: Game) {
     this.router.navigate(['/games', game.id]);
+  }
+
+  getImageUrl(imageFilename: string) {
+    return this.fileUploadService.getFileUrl(imageFilename);
   }
 }

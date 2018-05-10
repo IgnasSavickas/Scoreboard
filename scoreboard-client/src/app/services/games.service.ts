@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Game} from '../models/game';
+import {Player} from '../models/player';
 
 @Injectable()
 export class GamesService {
@@ -36,6 +37,10 @@ export class GamesService {
     const body = JSON.stringify(game);
     return this.http.put(`${this.gamesApiUrl}/${id}`, body, {headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'});
+  }
+
+  getTeamGames(teamId: number): Observable<Game[]> {
+    return this.http.get<Game[]>(`${this.gamesApiUrl}/team/${teamId}`);
   }
 
 }

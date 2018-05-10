@@ -60,12 +60,33 @@ namespace ScoreboardServer.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> GetSize(string userId)
+        {
+            var size = await _games
+                .Where(x => x.ApplicationUserId == userId)
+                .CountAsync();
+            return size;
+        }
+
+        public async Task<ICollection<Game>> GetAllByTeamId(int teamId)
+        {
+            var games = await _games
+                .Include(x => x.HomeTeam)
+                .Include(x => x.VisitorTeam)
+                .Where(x => x.HomeTeamId == teamId || x.VisitorTeamId == teamId)
+                .ToArrayAsync();
+
+            return games;
+        }
+
         private static void MapUpdatedValues(Game existingGame, Game updatedGame)
         {
             existingGame.StartDate = updatedGame.StartDate;
             existingGame.EndDate = updatedGame.EndDate;
             existingGame.PeriodTime = updatedGame.PeriodTime;
             existingGame.Periods = updatedGame.Periods;
+            existingGame.HomePoints = updatedGame.HomePoints;
+            existingGame.VisitorPoints = updatedGame.VisitorPoints;
             //existingGame.HomeTeamId = updatedGame.HomeTeamId;
             //existingGame.VisitorTeamId = updatedGame.VisitorTeamId;
         }

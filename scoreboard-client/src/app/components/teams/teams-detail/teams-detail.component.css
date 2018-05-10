@@ -1,0 +1,21 @@
+.logo {
+  height: 50px;
+}
+
+.logo img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.team-tab-content {
+  padding: 16px;
+}
+
+.actions {
+  display: flex;
+}
+
+.table-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}

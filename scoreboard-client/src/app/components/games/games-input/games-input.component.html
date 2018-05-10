@@ -2,14 +2,14 @@
 <div>
   <form #teamInputForm="ngForm">
     <div mat-dialog-content>
-      <mat-form-field>
+      <mat-form-field *ngIf="buttonText !== 'Update'">
         <mat-select placeholder="Home Team" [(ngModel)]="game.homeTeam" name="gameHomeTeam" (change)="onChange($event)">
           <mat-option *ngFor="let team of teams" [value]="team">
             {{team.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-table #table [dataSource]="dataSource">
+      <mat-table #table *ngIf="buttonText !== 'Update'" [dataSource]="dataSource">
 
         <ng-container matColumnDef="number">
           <mat-header-cell *matHeaderCellDef matTooltip="Number">#</mat-header-cell>
@@ -19,6 +19,51 @@
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
           <mat-cell *matCellDef="let player">{{player.name}} {{player.surname}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fgma">
+          <mat-header-cell *matHeaderCellDef matTooltip="Field goal">FG</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.fg}} %">{{player.fgm}}/{{player.fga}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ftma">
+          <mat-header-cell *matHeaderCellDef matTooltip="Free throws">FT</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.ft}} %">{{player.ftm}}/{{player.fta}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fgma3">
+          <mat-header-cell *matHeaderCellDef matTooltip="Three-point field goal">3FG</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.fg3}} %">{{player.fgm3}}/{{player.fga3}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="pf">
+          <mat-header-cell *matHeaderCellDef matTooltip="Personal fouls">PF</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.pf}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="reb">
+          <mat-header-cell *matHeaderCellDef matTooltip="Rebounds">REB</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.reb}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ast">
+          <mat-header-cell *matHeaderCellDef matTooltip="Assists">AST</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.ast}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="stl">
+          <mat-header-cell *matHeaderCellDef matTooltip="Steals">STL</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.stl}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="blk">
+          <mat-header-cell *matHeaderCellDef matTooltip="Blocks">BLK</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.blk}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to">
+          <mat-header-cell *matHeaderCellDef matTooltip="Turnovers">TO</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.to}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -35,14 +80,14 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let player; columns: displayedColumns;"></mat-row>
       </mat-table>
-      <mat-form-field>
+      <mat-form-field *ngIf="buttonText !== 'Update'">
         <mat-select placeholder="Visitor Team" [(ngModel)]="game.visitorTeam" name="gameVisitorTeam" (change)="onChange2($event)">
           <mat-option *ngFor="let team of teams" [value]="team">
             {{team.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-table #table [dataSource]="dataSource2">
+      <mat-table #table *ngIf="buttonText !== 'Update'" [dataSource]="dataSource2">
 
         <ng-container matColumnDef="number">
           <mat-header-cell *matHeaderCellDef matTooltip="Number">#</mat-header-cell>
@@ -52,6 +97,51 @@
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
           <mat-cell *matCellDef="let player">{{player.name}} {{player.surname}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fgma">
+          <mat-header-cell *matHeaderCellDef matTooltip="Field goal">FG</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.fg}} %">{{player.fgm}}/{{player.fga}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ftma">
+          <mat-header-cell *matHeaderCellDef matTooltip="Free throws">FT</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.ft}} %">{{player.ftm}}/{{player.fta}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fgma3">
+          <mat-header-cell *matHeaderCellDef matTooltip="Three-point field goal">3FG</mat-header-cell>
+          <mat-cell *matCellDef="let player" matTooltip="{{player.fg3}} %">{{player.fgm3}}/{{player.fga3}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="pf">
+          <mat-header-cell *matHeaderCellDef matTooltip="Personal fouls">PF</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.pf}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="reb">
+          <mat-header-cell *matHeaderCellDef matTooltip="Rebounds">REB</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.reb}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ast">
+          <mat-header-cell *matHeaderCellDef matTooltip="Assists">AST</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.ast}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="stl">
+          <mat-header-cell *matHeaderCellDef matTooltip="Steals">STL</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.stl}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="blk">
+          <mat-header-cell *matHeaderCellDef matTooltip="Blocks">BLK</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.blk}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to">
+          <mat-header-cell *matHeaderCellDef matTooltip="Turnovers">TO</mat-header-cell>
+          <mat-cell *matCellDef="let player">{{player.to}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
