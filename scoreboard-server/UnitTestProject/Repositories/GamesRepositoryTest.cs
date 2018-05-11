@@ -65,7 +65,7 @@ namespace UnitTestProject.Repositories
             {
                 var gamesRepository = new GamesRepository(context);
 
-                var games = await gamesRepository.GetAll(0, 2);
+                var games = await gamesRepository.GetAll(0, 2, null);
 
                 Assert.Equal(2, games.Count);
                 Assert.NotNull(games.SingleOrDefault(x => x.Id == 1));

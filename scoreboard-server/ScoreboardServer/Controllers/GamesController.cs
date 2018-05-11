@@ -45,7 +45,17 @@ namespace ScoreboardServer.Controllers
             return Ok(games);
         }
 
+        [AllowAnonymous]
+        [HttpGet("public")]
+        [ProducesResponseType(typeof(Game), 200)]
+        public async Task<IActionResult> GetPublicRange([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+        {
+            var games = await _service.GetAllGames(offset, limit);
+            return Ok(games);
+        }
+
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Game), 200)]
         public async Task<IActionResult> Get([FromRoute] int id)
@@ -67,6 +77,14 @@ namespace ScoreboardServer.Controllers
             return Ok(size);
         }
 
+        [AllowAnonymous]
+        [HttpGet("public/size")]
+        public async Task<IActionResult> GetPublicSize()
+        {
+            var size = await _service.GetSize();
+            return Ok(size);
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Game value)
@@ -74,6 +92,16 @@ namespace ScoreboardServer.Controllers
             var userId = GetUserId();
             value.ApplicationUserId = userId;
             value.DateCreated = DateTime.Now;
+            if (value.Stats != null)
+            {
+                foreach (var stats in value.Stats)
+                {
+                    if (stats.Player != null)
+                    {
+                        stats.Player.ApplicationUserId = userId;
+                    }
+                }
+            }
             var id = await _service.Create(value);
             return Created("/games/" + id, id);
         }

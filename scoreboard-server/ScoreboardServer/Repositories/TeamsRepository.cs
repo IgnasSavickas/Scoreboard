@@ -22,6 +22,8 @@ namespace ScoreboardServer.Repositories
         public async Task<Team> GetById(int id)
         {
             var team = await _teams
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Stats)
                 .SingleOrDefaultAsync(x => x.Id == id);
             return team;
         }

@@ -72,6 +72,13 @@ namespace ScoreboardServer.Controllers
         {
             var userId = GetUserId();
             value.ApplicationUserId = userId;
+            if (value.Players != null)
+            {
+                foreach (var player in value.Players)
+                {
+                    player.ApplicationUserId = userId;
+                }
+            }
             var id = await _service.Create(value);
             return Created("/teams/" + id, id);
         }

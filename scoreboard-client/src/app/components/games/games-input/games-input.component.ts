@@ -119,6 +119,7 @@ export class GamesInputComponent implements OnInit {
     gameResult.periodTime = this.game.periodTime;
     gameResult.homeTeam = this.game.homeTeam;
     gameResult.visitorTeam = this.game.visitorTeam;
+    gameResult.public = this.game.public;
     const gameStats: Stats[] = [];
     for (const player of this.dataSource.data as Player[]) {
       const newGameStats = new Stats();
@@ -180,7 +181,7 @@ export class StatsInputComponent {
   buttonText: string;
 
   constructor(public dialogRef: MatDialogRef<StatsInputComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private playersService: PlayersService, public dialog: MatDialog) {
+              @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) {
     this.stats = Object.assign({}, data.player);
     this.stats.id = data.statsId;
     this.title = data.title;

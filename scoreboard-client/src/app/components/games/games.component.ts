@@ -3,7 +3,7 @@ import {Game} from '../../models/game';
 import {GamesService} from '../../services/games.service';
 import {AuthService} from '../../services/auth.service';
 import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
-import {Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {FileUploadService} from '../../services/file-upload.service';
 
 @Component({
@@ -15,18 +15,26 @@ export class GamesComponent implements OnInit {
   games: Game[] = [];
   gamesSize: number;
   pageSize = 10;
-  pageIndex: number;
+  pageIndex = 0;
 
   constructor(private authService: AuthService, private gamesService: GamesService, private fileUploadService: FileUploadService,
-              private router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+              private router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.gamesService.getGames(0, 10).subscribe(games => {
-      this.games = games;
-      console.log(games);
-    }, error => {
-      console.log(error);
-      this.authService.handleError(error);
+    this.route.queryParams.subscribe((params: ParamMap) => {
+      const page = params['page'];
+      const pageSize = params['pageSize'];
+      if (page !== undefined) {
+        this.pageIndex = page;
+        this.pageSize = pageSize;
+      }
+      this.gamesService.getGames(this.pageIndex * this.pageSize, this.pageSize).subscribe(games => {
+        this.games = games;
+        console.log(games);
+      }, error => {
+        console.log(error);
+        this.authService.handleError(error);
+      });
     });
     this.gamesService.getGamesSize().subscribe(size => {
       this.gamesSize = size;
@@ -38,8 +46,9 @@ export class GamesComponent implements OnInit {
 
   onPageEvent(pageEvent: PageEvent) {
     this.pageIndex = pageEvent.pageIndex;
-    this.gamesService.getGames(pageEvent.pageIndex * pageEvent.pageSize, pageEvent.pageSize).subscribe(teams => {
-      this.games = teams;
+    this.gamesService.getGames(pageEvent.pageIndex * pageEvent.pageSize, pageEvent.pageSize).subscribe(games => {
+      this.games = games;
+      this.router.navigate(['/games'], {queryParams: { page: pageEvent.pageIndex, pageSize: pageEvent.pageSize }});
     }, error => {
       console.log(error);
       this.authService.handleError(error);

@@ -1,1 +1,21 @@
 <app-header [titleName]="'Home'"></app-header>
+<mat-toolbar>Public Games</mat-toolbar>
+<p *ngIf="games.length == 0">There is no games.</p>
+<mat-nav-list>
+  <mat-list-item *ngFor="let game of games" (click)="onGameClick(game)">
+    <div class="logo">
+      <img *ngIf="game.homeTeam.logoPath" src="{{getImageUrl(game.homeTeam.logoPath)}}" alt="Team Logo">
+    </div>
+    <div class="game">
+      {{game.homeTeam.name}} {{game.homePoints}}:{{game.visitorPoints}} {{game.visitorTeam.name}}
+    </div>
+    <div class="logo">
+      <img *ngIf="game.visitorTeam.logoPath" src="{{getImageUrl(game.visitorTeam.logoPath)}}" alt="Team Logo">
+    </div>
+  </mat-list-item>
+</mat-nav-list>
+<mat-paginator [length]="gamesSize"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageEvent($event)">
+</mat-paginator>

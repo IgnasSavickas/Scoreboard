@@ -65,7 +65,7 @@ namespace UnitTestProject.Repositories
             {
                 var teamsRepository = new TeamsRepository(context);
 
-                var teams = await teamsRepository.GetAll(0, 2);
+                var teams = await teamsRepository.GetAll(0, 2, null);
 
                 Assert.Equal(2, teams.Count);
                 Assert.NotNull(teams.SingleOrDefault(x => x.Id == 1));
@@ -91,7 +91,7 @@ namespace UnitTestProject.Repositories
             {
                 var teamsRepository = new TeamsRepository(context);
 
-                var teamsSize = await teamsRepository.GetSize();
+                var teamsSize = await teamsRepository.GetSize(null);
 
                 Assert.Equal(3, teamsSize);
             }

@@ -93,6 +93,7 @@ namespace ScoreboardServer.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet("team/{id}")]
         [ProducesResponseType(typeof(Player), 200)]
         public async Task<IActionResult> GetAllByTeamId([FromRoute] int id)

@@ -16,12 +16,20 @@ export class GamesService {
     return this.http.get<Game[]>(`${this.gamesApiUrl}?offset=${offset}&limit=${limit}`);
   }
 
+  getPublicGames(offset?: number, limit?: number): Observable<Game[]> {
+    return this.http.get<Game[]>(`${this.gamesApiUrl}/public?offset=${offset}&limit=${limit}`);
+  }
+
   getGame(id: number): Observable<Game> {
     return this.http.get<Game>(`${this.gamesApiUrl}/${id}`);
   }
 
   getGamesSize(): Observable<number> {
     return this.http.get<number>(`${this.gamesApiUrl}/size`);
+  }
+
+  getPublicGamesSize(): Observable<number> {
+    return this.http.get<number>(`${this.gamesApiUrl}/public/size`);
   }
 
   addGame(game: Game): Observable<number> {

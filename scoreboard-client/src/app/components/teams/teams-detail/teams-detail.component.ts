@@ -35,48 +35,46 @@ export class TeamsDetailComponent implements OnInit {
       const id = params.get('id');
       this.teamsService.getTeam(+id).subscribe(team => {
         this.team = team;
-        this.playersService.getTeamPlayers(team.id).subscribe(players => {
-          // this.players = players;
-          const newPlayers: Player[] = [];
-          for (const player of players) {
-            const newPlayer = new Player();
-            newPlayer.id = player.id;
-            newPlayer.name = player.name;
-            newPlayer.surname = player.surname;
-            newPlayer.number = player.number;
-            for (const stats of player.stats) {
-              newPlayer.fgm += stats.fgm;
-              newPlayer.fga += stats.fga;
-              newPlayer.ftm += stats.ftm;
-              newPlayer.fta += stats.fta;
-              newPlayer.fgm3 += stats.fgm3;
-              newPlayer.fga3 += stats.fga3;
-              newPlayer.pf += stats.pf;
-              newPlayer.reb += stats.reb;
-              newPlayer.ast += stats.ast;
-              newPlayer.stl += stats.stl;
-              newPlayer.blk += stats.blk;
-              newPlayer.to += stats.to;
-            }
-            if (newPlayer.fga !== 0) {
-              newPlayer.fg = newPlayer.fgm / newPlayer.fga * 100;
-              newPlayer.fg = Math.round(newPlayer.fg * 100) / 100;
-            }
-            if (newPlayer.fta !== 0) {
-              newPlayer.ft = newPlayer.ftm / newPlayer.fta * 100;
-              newPlayer.ft = Math.round(newPlayer.ft * 100) / 100;
-            }
-            if (newPlayer.fga3 !== 0) {
-              newPlayer.fg3 = newPlayer.fgm3 / newPlayer.fga3 * 100;
-              newPlayer.fg3 = Math.round(newPlayer.fg3 * 100) / 100;
-            }
-            this.players.push(newPlayer);
+        const newPlayers: Player[] = [];
+        for (const player of team.players) {
+          const newPlayer = new Player();
+          newPlayer.id = player.id;
+          newPlayer.name = player.name;
+          newPlayer.surname = player.surname;
+          newPlayer.number = player.number;
+          console.log(player);
+          for (const stats of player.stats) {
+            newPlayer.fgm += stats.fgm;
+            newPlayer.fga += stats.fga;
+            newPlayer.ftm += stats.ftm;
+            newPlayer.fta += stats.fta;
+            newPlayer.fgm3 += stats.fgm3;
+            newPlayer.fga3 += stats.fga3;
+            newPlayer.pf += stats.pf;
+            newPlayer.reb += stats.reb;
+            newPlayer.ast += stats.ast;
+            newPlayer.stl += stats.stl;
+            newPlayer.blk += stats.blk;
+            newPlayer.to += stats.to;
           }
-          this.dataSource.data = this.players;
-        }, error => {
-          console.log(error);
-          this.authService.handleError(error);
-        });
+          if (newPlayer.fga !== 0) {
+            newPlayer.fg = newPlayer.fgm / newPlayer.fga * 100;
+            newPlayer.fg = Math.round(newPlayer.fg * 100) / 100;
+          }
+          if (newPlayer.fta !== 0) {
+            newPlayer.ft = newPlayer.ftm / newPlayer.fta * 100;
+            newPlayer.ft = Math.round(newPlayer.ft * 100) / 100;
+          }
+          if (newPlayer.fga3 !== 0) {
+            newPlayer.fg3 = newPlayer.fgm3 / newPlayer.fga3 * 100;
+            newPlayer.fg3 = Math.round(newPlayer.fg3 * 100) / 100;
+          }
+          this.players.push(newPlayer);
+        }
+        this.dataSource.data = this.players;
+      }, error => {
+        console.log(error);
+        this.authService.handleError(error);
       });
       this.gamesService.getTeamGames(+id).subscribe(games => {
         this.games = games;

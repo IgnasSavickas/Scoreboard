@@ -170,6 +170,7 @@
       <mat-form-field>
         <input matInput type="number" placeholder="Periods" [(ngModel)]="game.periods" id="periods" name="gamePeriods" required>
       </mat-form-field>
+      <mat-checkbox [(ngModel)]="game.public" id="public" name="gamePublic">Public</mat-checkbox>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button [disabled]="!teamInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>

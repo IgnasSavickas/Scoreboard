@@ -46,17 +46,14 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   login() {
-    console.log('start login');
     this.oidcSecurityService.authorize();
   }
 
   refreshSession() {
-    console.log('start refreshSession');
     this.oidcSecurityService.authorize();
   }
 
   logout() {
-    console.log('start logoff');
     this.oidcSecurityService.logoff();
   }
 

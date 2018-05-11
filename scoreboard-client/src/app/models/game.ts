@@ -15,4 +15,5 @@ export class Game {
   visitorTeamId: number;
   visitorPoints = 0;
   stats: Stats[];
+  public: boolean;
 }

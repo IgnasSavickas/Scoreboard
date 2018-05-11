@@ -9,7 +9,7 @@ import {Player} from '../../models/player';
 import {PlayersService} from '../../services/players.service';
 import {FileUploadService} from '../../services/file-upload.service';
 import {Game} from '../../models/game';
-import {Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
   selector: 'app-teams',
@@ -20,18 +20,26 @@ export class TeamsComponent implements OnInit {
   teams: Team[] = [];
   teamsSize: number;
   pageSize = 10;
-  pageIndex: number;
+  pageIndex = 0;
 
   constructor(private authService: AuthService, private teamsService: TeamsService, private fileUploadService: FileUploadService,
-              public dialog: MatDialog, public snackBar: MatSnackBar, private router: Router) { }
+              public dialog: MatDialog, public snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.teamsService.getTeams(0, 10).subscribe(teams => {
-      this.teams = teams;
-      console.log(this.teams);
-    }, error => {
-      console.log(error);
-      this.authService.handleError(error);
+    this.route.queryParams.subscribe((params: ParamMap) => {
+      const page = params['page'];
+      const pageSize = params['pageSize'];
+      if (page !== undefined) {
+        this.pageIndex = page;
+        this.pageSize = pageSize;
+      }
+      this.teamsService.getTeams(this.pageIndex * this.pageSize, this.pageSize).subscribe(teams => {
+        this.teams = teams;
+        console.log(this.teams);
+      }, error => {
+        console.log(error);
+        this.authService.handleError(error);
+      });
     });
     this.teamsService.getTeamsSize().subscribe(size => {
       this.teamsSize = size;
@@ -49,6 +57,7 @@ export class TeamsComponent implements OnInit {
     this.pageIndex = pageEvent.pageIndex;
     this.teamsService.getTeams(pageEvent.pageIndex * pageEvent.pageSize, pageEvent.pageSize).subscribe(teams => {
       this.teams = teams;
+      this.router.navigate(['/teams'], {queryParams: { page: pageEvent.pageIndex, pageSize: pageEvent.pageSize }});
     }, error => {
       console.log(error);
       this.authService.handleError(error);

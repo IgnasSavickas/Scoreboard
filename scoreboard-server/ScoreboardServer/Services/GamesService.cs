@@ -23,16 +23,18 @@ namespace ScoreboardServer.Services
             {
                 return null;
             }
-            return game.ApplicationUserId == userId ? game : null;
+
+            if (userId == null && game.Public)
+            {
+                return game;
+            }
+            return null;
         }
 
-        public async Task<ICollection<Game>> GetAllGames(int offset, int limit, string userId)
+        public async Task<ICollection<Game>> GetAllGames(int offset, int limit, string userId = null)
         {
-            var games = await _repository.GetAll(offset, limit);
-            var allUsersGames = games
-                .Where(x => x.ApplicationUserId == userId)
-                .ToList();
-            return allUsersGames;
+            var games = await _repository.GetAll(offset, limit, userId);
+            return games;
         }
 
         public async Task<int> Create(Game team)
@@ -63,7 +65,7 @@ namespace ScoreboardServer.Services
             return true;
         }
 
-        public async Task<int> GetSize(string userId)
+        public async Task<int> GetSize(string userId = null)
         {
             var size = await _repository.GetSize(userId);
             return size;

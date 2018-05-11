@@ -3,7 +3,7 @@
 <mat-nav-list>
   <mat-list-item *ngFor="let game of games" (click)="onGameClick(game)">
     <div class="logo">
-      <img src="{{getImageUrl(game.homeTeam.logoPath)}}" alt="Team Logo">
+      <img *ngIf="game.homeTeam.logoPath" src="{{getImageUrl(game.homeTeam.logoPath)}}" alt="Team Logo">
     </div>
     <div class="game">
       {{game.homeTeam.name}} {{game.homePoints}}:{{game.visitorPoints}} {{game.visitorTeam.name}}

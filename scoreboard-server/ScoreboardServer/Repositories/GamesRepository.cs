@@ -28,16 +28,30 @@ namespace ScoreboardServer.Repositories
             return game;
         }
 
-        public async Task<ICollection<Game>> GetAll(int offset, int limit)
+        public async Task<ICollection<Game>> GetAll(int offset, int limit, string userId = null)
         {
-
-            var games = await _games
-                .Include(x => x.HomeTeam)
-                .Include(x => x.VisitorTeam)
-                .Skip(offset)
-                .Take(limit)
-                .ToArrayAsync();
-            return games;
+            if (userId != null)
+            {
+                var games = await _games
+                    .Where(x => x.ApplicationUserId == userId)
+                    .Include(x => x.HomeTeam)
+                    .Include(x => x.VisitorTeam)
+                    .Skip(offset)
+                    .Take(limit)
+                    .ToArrayAsync();
+                return games;
+            }
+            else
+            {
+                var games = await _games
+                    .Where(x => x.Public)
+                    .Include(x => x.HomeTeam)
+                    .Include(x => x.VisitorTeam)
+                    .Skip(offset)
+                    .Take(limit)
+                    .ToArrayAsync();
+                return games;
+            }
         }
 
         public async Task<int> Create(Game newGame)
@@ -60,12 +74,22 @@ namespace ScoreboardServer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> GetSize(string userId)
+        public async Task<int> GetSize(string userId = null)
         {
-            var size = await _games
-                .Where(x => x.ApplicationUserId == userId)
-                .CountAsync();
-            return size;
+            if (userId != null)
+            {
+                var size = await _games
+                    .Where(x => x.ApplicationUserId == userId)
+                    .CountAsync();
+                return size;
+            }
+            else
+            {
+                var size = await _games
+                    .Where(x => x.Public)
+                    .CountAsync();
+                return size;
+            }
         }
 
         public async Task<ICollection<Game>> GetAllByTeamId(int teamId)
@@ -87,8 +111,7 @@ namespace ScoreboardServer.Repositories
             existingGame.Periods = updatedGame.Periods;
             existingGame.HomePoints = updatedGame.HomePoints;
             existingGame.VisitorPoints = updatedGame.VisitorPoints;
-            //existingGame.HomeTeamId = updatedGame.HomeTeamId;
-            //existingGame.VisitorTeamId = updatedGame.VisitorTeamId;
+            existingGame.Public = updatedGame.Public;
         }
     }
 }
