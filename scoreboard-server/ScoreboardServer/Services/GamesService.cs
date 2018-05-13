@@ -28,7 +28,8 @@ namespace ScoreboardServer.Services
             {
                 return game;
             }
-            return null;
+
+            return game;
         }
 
         public async Task<ICollection<Game>> GetAllGames(int offset, int limit, string userId = null)
