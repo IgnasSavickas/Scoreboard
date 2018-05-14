@@ -305,4 +305,5 @@ testem.log
 Thumbs.db
 
 database.db
-images/
+scoreboard-server/ScoreboardServer/images/
+!scoreboard-server/IdentityServer/wwwroot/lib/

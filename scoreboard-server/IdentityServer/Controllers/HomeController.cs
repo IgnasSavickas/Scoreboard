@@ -20,21 +20,7 @@ namespace IdentityServer.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Ignas Savickas";
-
-            return View();
+            return RedirectToAction(nameof(ManageController.Index), "Manage");
         }
 
         /// <summary>
