@@ -19,13 +19,8 @@ export class GamesInputComponent implements OnInit {
   title: string;
   buttonText: string;
 
-  displayedColumns = ['number', 'name', 'fgma', 'ftma', 'fgma3', 'pf', 'reb', 'ast', 'stl', 'blk', 'to', 'actions'];
-  dataSource = new MatTableDataSource();
-  dataSource2 = new MatTableDataSource();
-
-  constructor(private teamsService: TeamsService, private playersService: PlayersService, private authService: AuthService,
-              public dialog: MatDialog, public dialogRef: MatDialogRef<GamesInputComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private teamsService: TeamsService, private authService: AuthService, public dialog: MatDialog,
+			  public dialogRef: MatDialogRef<GamesInputComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.game = Object.assign({}, data.game);
       this.title = data.title;
@@ -37,76 +32,12 @@ export class GamesInputComponent implements OnInit {
     this.teamsService.getTeamsSize().subscribe(size => {
       this.teamsService.getTeams(0, size).subscribe(teams => {
         this.teams = teams;
-        console.log(teams);
       }, error => {
         console.log(error);
       });
     }, error => {
       console.log(error);
       this.authService.handleError(error);
-    });
-  }
-
-  updateStats(player) {
-    console.log(player);
-    const dialogRef = this.dialog.open(StatsInputComponent, {
-      data: { player: player, title: player.name + ' ' + player.surname, buttonText: 'Add' }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result) {
-        player.fgm = result.fgm;
-        player.fga = result.fga;
-        player.ftm = result.ftm;
-        player.fta = result.fta;
-        player.fgm3 = result.fgm3;
-        player.fga3 = result.fga3;
-        player.fg = result.fg;
-        player.ft = result.ft;
-        player.fg3 = result.fg3;
-        player.pf = result.pf;
-        player.reb = result.reb;
-        player.ast = result.ast;
-        player.stl = result.stl;
-        player.blk = result.blk;
-        player.to = result.to;
-      }
-      console.log(this.dataSource.data);
-    });
-  }
-
-  onChange(change) {
-    this.playersService.getTeamPlayers(change.value.id).subscribe(players => {
-      const newPlayers: Player[] = [];
-      for (const player of players) {
-        const newPlayer = new Player();
-        newPlayer.id = player.id;
-        newPlayer.name = player.name;
-        newPlayer.surname = player.surname;
-        newPlayer.number = player.number;
-        newPlayers.push(newPlayer);
-      }
-      console.log(newPlayers);
-      this.dataSource.data = newPlayers;
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  onChange2(change) {
-    this.playersService.getTeamPlayers(change.value.id).subscribe(players => {
-      const newPlayers: Player[] = [];
-      for (const player of players) {
-        const newPlayer = new Player();
-        newPlayer.id = player.id;
-        newPlayer.name = player.name;
-        newPlayer.surname = player.surname;
-        newPlayer.number = player.number;
-        newPlayers.push(newPlayer);
-      }
-      this.dataSource2.data = newPlayers;
-    }, error => {
-      console.log(error);
     });
   }
 
@@ -120,50 +51,6 @@ export class GamesInputComponent implements OnInit {
     gameResult.homeTeam = this.game.homeTeam;
     gameResult.visitorTeam = this.game.visitorTeam;
     gameResult.public = this.game.public;
-    const gameStats: Stats[] = [];
-    for (const player of this.dataSource.data as Player[]) {
-      const newGameStats = new Stats();
-      newGameStats.fgm = player.fgm;
-      newGameStats.fga = player.fga;
-      newGameStats.ftm = player.ftm;
-      newGameStats.fta = player.fta;
-      newGameStats.fgm3 = player.fgm3;
-      newGameStats.fga3 = player.fga3;
-      newGameStats.fg = player.fg;
-      newGameStats.ft = player.ft;
-      newGameStats.fg3 = player.fg3;
-      newGameStats.pf = player.pf;
-      newGameStats.reb = player.reb;
-      newGameStats.ast = player.ast;
-      newGameStats.stl = player.stl;
-      newGameStats.blk = player.blk;
-      newGameStats.to = player.to;
-      newGameStats.playerId = player.id;
-      gameStats.push(newGameStats);
-      gameResult.homePoints += player.fgm * 2 + player.ftm + player.fgm3 * 3;
-    }
-    for (const player of this.dataSource2.data as Player[]) {
-      const newGameStats = new Stats();
-      newGameStats.fgm = player.fgm;
-      newGameStats.fga = player.fga;
-      newGameStats.ftm = player.ftm;
-      newGameStats.fta = player.fta;
-      newGameStats.fgm3 = player.fgm3;
-      newGameStats.fga3 = player.fga3;
-      newGameStats.fg = player.fg;
-      newGameStats.ft = player.ft;
-      newGameStats.fg3 = player.fg3;
-      newGameStats.pf = player.pf;
-      newGameStats.reb = player.reb;
-      newGameStats.ast = player.ast;
-      newGameStats.stl = player.stl;
-      newGameStats.blk = player.blk;
-      newGameStats.to = player.to;
-      newGameStats.playerId = player.id;
-      gameStats.push(newGameStats);
-      gameResult.visitorPoints += player.fgm * 2 + player.ftm + player.fgm3 * 3;
-    }
-    gameResult.stats = gameStats;
     this.dialogRef.close(gameResult);
   }
 

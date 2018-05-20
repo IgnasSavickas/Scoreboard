@@ -30,7 +30,6 @@ export class GamesComponent implements OnInit {
       }
       this.gamesService.getGames(this.pageIndex * this.pageSize, this.pageSize).subscribe(games => {
         this.games = games;
-        console.log(games);
       }, error => {
         console.log(error);
         this.authService.handleError(error);
@@ -71,7 +70,6 @@ export class GamesComponent implements OnInit {
     this.gamesService.addGame(newGame).subscribe(id => {
       game.id = id;
       this.games.push(game);
-      console.log('game added!');
       this.openSnackBar('Game \'' + game.homeTeam.name + 'vs' + game.visitorTeam.name + '\' added');
     }, error => {
       console.log(error);

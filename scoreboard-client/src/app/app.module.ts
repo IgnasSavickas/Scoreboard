@@ -28,7 +28,6 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { NavBarComponent } from './components/body/nav-bar/nav-bar.component';
-import {IdentityService} from './services/identity.service';
 import {AuthInterceptor} from './auth-interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {TeamsComponent} from './components/teams/teams.component';
@@ -109,7 +108,6 @@ const appRoutes: Routes = [
   providers: [
     OidcSecurityService,
     AuthService,
-    IdentityService,
     TeamsService,
     PlayersService,
     GamesService,

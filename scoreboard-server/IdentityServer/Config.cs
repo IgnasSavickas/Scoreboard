@@ -36,31 +36,6 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                    ClientSecrets = 
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = { "scoreboardapi" }
-                },
-
-                // resource owner password grant client
-                new Client
-                {
-                    ClientId = "ro.client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    ClientSecrets = 
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = { "scoreboardapi" }
-                },
-
-                new Client
-                {
                     ClientId = "ng",
                     ClientName = "Scoreboard",
                     AllowedGrantTypes = GrantTypes.Implicit,
@@ -69,7 +44,7 @@ namespace IdentityServer
 
                     RedirectUris = { "http://localhost:4200/callback" },
                     PostLogoutRedirectUris = { "http://localhost:4200/home" },
-                    AllowedCorsOrigins = { "http://localhost:4200" },
+                    AllowedCorsOrigins = { "http://localhost:4200", "http://localhost" },
 
                     AllowedScopes =
                     {

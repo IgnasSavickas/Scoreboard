@@ -40,7 +40,7 @@ namespace ScoreboardServer
             {
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200")
+                    policy.WithOrigins("http://localhost:4200", "http://localhost")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -91,7 +91,7 @@ namespace ScoreboardServer
             services.AddScoped<IStatsService, StatsService>();
             services.AddScoped<IStatsRepository, StatsRepository>();
             services.AddScoped<IFileUploadService, FileUploadService>();
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../database.db"));
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Filename=../../database.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

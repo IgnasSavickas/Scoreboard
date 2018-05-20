@@ -42,7 +42,7 @@ export class TeamsDetailComponent implements OnInit {
           newPlayer.name = player.name;
           newPlayer.surname = player.surname;
           newPlayer.number = player.number;
-          console.log(player);
+          newPlayer.teamId = player.teamId;
           for (const stats of player.stats) {
             newPlayer.fgm += stats.fgm;
             newPlayer.fga += stats.fga;
@@ -106,7 +106,6 @@ export class TeamsDetailComponent implements OnInit {
           this.snackBar.open('Team \'' + this.team.name + '\' updated', null, {
             duration: 3000
           });
-          console.log('updated team!');
         }, error => {
           console.log(error);
           this.authService.handleError(error);

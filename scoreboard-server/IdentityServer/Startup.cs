@@ -29,7 +29,7 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite("Filename=../database.db"));
+                options.UseSqlite("Filename=../../database.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -96,7 +96,6 @@ namespace IdentityServer
 
             app.UseStaticFiles();
 
-            //app.UseAuthentication();
             app.UseIdentityServer();
 
             app.UseMvc(routes =>

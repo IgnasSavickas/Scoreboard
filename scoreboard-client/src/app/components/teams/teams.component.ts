@@ -35,7 +35,6 @@ export class TeamsComponent implements OnInit {
       }
       this.teamsService.getTeams(this.pageIndex * this.pageSize, this.pageSize).subscribe(teams => {
         this.teams = teams;
-        console.log(this.teams);
       }, error => {
         console.log(error);
         this.authService.handleError(error);
@@ -81,7 +80,6 @@ export class TeamsComponent implements OnInit {
         this.teams.push(team);
       }
       this.teamsSize++;
-      console.log('team added!');
       this.openSnackBar('Team \'' + team.name + '\' added');
     }, error => {
       console.log(error);

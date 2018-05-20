@@ -26,9 +26,12 @@ namespace UnitTestProject.Repositories
         {
             using (var context = new ApplicationDbContext(_options))
             {
+                var team1 = new Team {Id = 1};
+                var team2 = new Team {Id = 2};
+                context.Teams.AddRange(team1, team2);
                 context.Games.AddRange(
-                    new Game { Id = 1 },
-                    new Game { Id = 2 });
+                    new Game { Id = 1, HomeTeam = team1, VisitorTeam = team2 },
+                    new Game { Id = 2, HomeTeam = team2, VisitorTeam = team1 });
 
                 context.SaveChanges();
             }
@@ -53,10 +56,13 @@ namespace UnitTestProject.Repositories
         {
             using (var context = new ApplicationDbContext(_options))
             {
+                var team1 = new Team { Id = 1 };
+                var team2 = new Team { Id = 2 };
+                context.Teams.AddRange(team1, team2);
                 context.Games.AddRange(
-                    new Game { Id = 1 },
-                    new Game { Id = 2 },
-                    new Game { Id = 3 });
+                    new Game { Id = 1, HomeTeam = team1, VisitorTeam = team2, Public = true},
+                    new Game { Id = 2, HomeTeam = team2, VisitorTeam = team1 },
+                    new Game { Id = 3, HomeTeam = team2, VisitorTeam = team1, Public = true});
 
                 context.SaveChanges();
             }
@@ -65,12 +71,35 @@ namespace UnitTestProject.Repositories
             {
                 var gamesRepository = new GamesRepository(context);
 
-                var games = await gamesRepository.GetAll(0, 2, null);
+                var games = await gamesRepository.GetAll(0, 3, null);
 
                 Assert.Equal(2, games.Count);
                 Assert.NotNull(games.SingleOrDefault(x => x.Id == 1));
-                Assert.NotNull(games.SingleOrDefault(x => x.Id == 2));
+                Assert.NotNull(games.SingleOrDefault(x => x.Id == 3));
 
+            }
+        }
+
+        [Fact]
+        public async Task GetsGamesSize()
+        {
+            using (var context = new ApplicationDbContext(_options))
+            {
+                context.Games.AddRange(
+                    new Game { Id = 1, Public = true },
+                    new Game { Id = 2 },
+                    new Game { Id = 3, Public = true });
+
+                context.SaveChanges();
+            }
+
+            using (var context = new ApplicationDbContext(_options))
+            {
+                var gamesRepository = new GamesRepository(context);
+
+                var gamesSize = await gamesRepository.GetSize(null);
+
+                Assert.Equal(2, gamesSize);
             }
         }
 

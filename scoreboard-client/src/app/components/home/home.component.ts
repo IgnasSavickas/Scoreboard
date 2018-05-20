@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
       }
       this.gamesService.getPublicGames(this.pageIndex * this.pageSize, this.pageSize).subscribe(games => {
         this.games = games;
-        console.log(games);
       }, error => {
         console.log(error);
       });

@@ -64,7 +64,6 @@ export class GamesDetailComponent implements OnInit {
             data.push({newPlayer, statsId});
             this.players.push(newPlayer);
           }
-          console.log(data);
           this.dataSource.data = data;
         }, error => {
           console.log(error);
@@ -102,7 +101,6 @@ export class GamesDetailComponent implements OnInit {
             data.push({newPlayer, statsId});
             this.players2.push(newPlayer);
           }
-          console.log(data);
           this.dataSource2.data = data;
         }, error => {
           console.log(error);
