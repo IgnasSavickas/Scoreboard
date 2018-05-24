@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ScoreboardServer.Models;
 using ScoreboardServer.Services;
@@ -61,6 +62,14 @@ namespace ScoreboardServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Player value)
         {
+            var teamPlayers = await _service.GetPlayersByTeamId(value.TeamId);
+            foreach (var teamPlayer in teamPlayers)
+            {
+                if (teamPlayer.Number == value.Number)
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+            }
             var userId = GetUserId();
             value.ApplicationUserId = userId;
             var id = await _service.Create(value);

@@ -1,9 +1,10 @@
 <h1 mat-dialog-title>{{title}}</h1>
 <div>
-  <form #teamInputForm="ngForm">
+  <form [formGroup]="teamInputForm">
     <div mat-dialog-content>
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="team.name" id="name" name="teamName" required>
+        <input matInput placeholder="Name" formControlName="name" id="name" required>
+        <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       <div class="file-upload">
         <button mat-raised-button color="primary" (click)="fileUpload.click()">Upload Logo</button>
@@ -19,7 +20,7 @@
       </div>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button [disabled]="!teamInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+      <button mat-raised-button [disabled]="!teamInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>
     </div>
   </form>
 </div>

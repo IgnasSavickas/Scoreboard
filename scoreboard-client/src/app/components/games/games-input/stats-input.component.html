@@ -1,53 +1,65 @@
 <h1 mat-dialog-title>{{title}}</h1>
-<form #playerInputForm="ngForm">
+<form [formGroup]="playerInputForm">
   <div mat-dialog-content>
     <div class="input-row">
       <mat-form-field>
-        <input matInput type="number" placeholder="FGM" [(ngModel)]="stats.fgm" id="fgm" name="playerFgm">
+        <input matInput type="number" placeholder="FGM" formControlName="fgm" id="fgm" min="0" (change)="changeValue(fga)">
+        <mat-error *ngIf="fgm.invalid">{{getStatsErrorMessage(fgm)}}</mat-error>
       </mat-form-field>
       /
       <mat-form-field>
-        <input matInput type="number" placeholder="FGA" [(ngModel)]="stats.fga" id="fga" name="playerFga">
+        <input matInput type="number" placeholder="FGA" formControlName="fga" id="fga" min="0">
+        <mat-error *ngIf="fga.invalid">{{getStatsErrorMessage(fga)}}</mat-error>
       </mat-form-field>
     </div>
     <div class="input-row">
       <mat-form-field>
-        <input matInput type="number" placeholder="FTM" [(ngModel)]="stats.ftm" id="ftm" name="playerFtm">
+        <input matInput type="number" placeholder="FTM" formControlName="ftm" id="ftm" min="0" (change)="changeValue(fta)">
+        <mat-error *ngIf="ftm.invalid">{{getStatsErrorMessage(ftm)}}</mat-error>
       </mat-form-field>
       /
       <mat-form-field>
-        <input matInput type="number" placeholder="FTA" [(ngModel)]="stats.fta" id="fta" name="playerFta">
+        <input matInput type="number" placeholder="FTA" formControlName="fta" id="fta" min="0">
+        <mat-error *ngIf="fta.invalid">{{getStatsErrorMessage(fta)}}</mat-error>
       </mat-form-field>
     </div>
     <div class="input-row">
       <mat-form-field>
-        <input matInput type="number" placeholder="3FGM" [(ngModel)]="stats.fgm3" id="fgm3" name="playerFgm3">
+        <input matInput type="number" placeholder="3FGM" formControlName="3fgm" id="fgm3" min="0" (change)="changeValue(fga3)">
+        <mat-error *ngIf="fgm3.invalid">{{getStatsErrorMessage(fgm3)}}</mat-error>
       </mat-form-field>
       /
       <mat-form-field>
-        <input matInput type="number" placeholder="3FGA" [(ngModel)]="stats.fga3" id="fga3" name="playerFga3">
+        <input matInput type="number" placeholder="3FGA" formControlName="3fga" id="fga3" min="0">
+        <mat-error *ngIf="fga3.invalid">{{getStatsErrorMessage(fga3)}}</mat-error>
       </mat-form-field>
     </div>
     <mat-form-field>
-      <input matInput type="number" placeholder="PF" [(ngModel)]="stats.pf" id="pf" name="playerPf">
+      <input matInput type="number" placeholder="PF" formControlName="pf" id="pf" min="0">
+      <mat-error *ngIf="pf.invalid">{{getStatsErrorMessage(pf)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="REB" [(ngModel)]="stats.reb" id="reb" name="playerReb">
+      <input matInput type="number" placeholder="REB" formControlName="reb" id="reb" min="0">
+      <mat-error *ngIf="reb.invalid">{{getStatsErrorMessage(reb)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="AST" [(ngModel)]="stats.ast" id="ast" name="playerAst">
+      <input matInput type="number" placeholder="AST" formControlName="ast" id="ast" min="0">
+      <mat-error *ngIf="ast.invalid">{{getStatsErrorMessage(ast)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="STL" [(ngModel)]="stats.stl" id="stl" name="playerStl">
+      <input matInput type="number" placeholder="STL" formControlName="stl" id="stl" min="0">
+      <mat-error *ngIf="stl.invalid">{{getStatsErrorMessage(stl)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="BLK" [(ngModel)]="stats.blk" id="blk" name="playerBlk">
+      <input matInput type="number" placeholder="BLK" formControlName="blk" id="blk" min="0">
+      <mat-error *ngIf="blk.invalid">{{getStatsErrorMessage(blk)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="TO" [(ngModel)]="stats.to" id="to" name="playerTo">
+      <input matInput type="number" placeholder="TO" formControlName="to" id="to" min="0">
+      <mat-error *ngIf="to.invalid">{{getStatsErrorMessage(to)}}</mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [disabled]="!playerInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+    <button mat-raised-button [disabled]="!playerInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>
   </div>
 </form>

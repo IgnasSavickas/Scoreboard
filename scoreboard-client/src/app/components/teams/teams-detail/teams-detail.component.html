@@ -33,7 +33,7 @@
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef="let player">{{player.name}} {{player.surname}}</mat-cell>
+          <mat-cell *matCellDef="let player">{{player.name}} {{player?.surname}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fgma">

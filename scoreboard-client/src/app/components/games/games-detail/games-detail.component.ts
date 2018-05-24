@@ -8,6 +8,7 @@ import {Player} from '../../../models/player';
 import {PlayersService} from '../../../services/players.service';
 import {GamesInputComponent, StatsInputComponent} from '../games-input/games-input.component';
 import {FileUploadService} from '../../../services/file-upload.service';
+import {Stats} from '../../../models/stats';
 
 @Component({
   selector: 'app-games-detail',
@@ -24,7 +25,8 @@ export class GamesDetailComponent implements OnInit {
 
   constructor(private authService: AuthService, private gamesService: GamesService, private playersService: PlayersService,
               private fileUploadService: FileUploadService, public dialog: MatDialog, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -125,90 +127,88 @@ export class GamesDetailComponent implements OnInit {
     this.dataSource2.filter = filterValue;
   }
 
-  updateStats(player, statsId, team) {
-    const dialogRef = this.dialog.open(StatsInputComponent, {
-      data: { player: player, statsId: statsId, title: player.name + ' ' + player.surname, buttonText: 'Update' }
+  updatePoints(players, result) {
+    let points = 0;
+    for (const player of players) {
+      if (player.id === result.playerId) {
+        player.fgm = result.fgm;
+        player.fga = result.fga;
+        player.ftm = result.ftm;
+        player.fta = result.fta;
+        player.fgm3 = result.fgm3;
+        player.fga3 = result.fga3;
+        player.pf = result.pf;
+        player.reb = result.reb;
+        player.ast = result.ast;
+        player.stl = result.stl;
+        player.blk = result.blk;
+        player.to = result.to;
+        if (player.fga !== 0) {
+          player.fg = player.fgm / player.fga * 100;
+          player.fg = Math.round(player.fg * 100) / 100;
+        }
+        if (player.fta !== 0) {
+          player.ft = player.ftm / player.fta * 100;
+          player.ft = Math.round(player.ft * 100) / 100;
+        }
+        if (player.fga3 !== 0) {
+          player.fg3 = player.fgm3 / player.fga3 * 100;
+          player.fg3 = Math.round(player.fg3 * 100) / 100;
+        }
+      }
+      points += player.fgm * 2 + player.ftm + player.fgm3 * 3;
+    }
+    return points;
+  }
+
+  updateGame(result) {
+    let homePoints: number;
+    let visitorPoints: number;
+    homePoints = this.updatePoints(this.players, result);
+    visitorPoints = this.updatePoints(this.players2, result);
+    this.game.homePoints = homePoints;
+    this.game.visitorPoints = visitorPoints;
+    this.gamesService.updateGame(this.game.id, this.game).subscribe(() => {
+    }, error => {
+      console.log(error);
+      this.authService.handleError(error);
     });
-    dialogRef.afterClosed().subscribe(result => {
+  }
+
+  updateStats(player, statsId) {
+    let surname = '';
+    if (player.surname) {
+      surname = player.surname;
+    }
+    const dialogRef = this.dialog.open(StatsInputComponent, {
+      data: {player: player, statsId: statsId, title: player.name + ' ' + surname, buttonText: 'Update'}
+    });
+    dialogRef.afterClosed().subscribe((result: Stats) => {
       if (result) {
-        this.playersService.updateStats(result.id, result).subscribe(() => {
-          let homePoints = 0;
-          let visitorPoints = 0;
-          for (const player2 of this.players) {
-            if (player2.id === result.id && team === 'home') {
-              player2.fgm = result.fgm;
-              player2.fga = result.fga;
-              player2.ftm = result.ftm;
-              player2.fta = result.fta;
-              player2.fgm3 = result.fgm3;
-              player2.fga3 = result.fga3;
-              player2.pf = result.pf;
-              player2.reb = result.reb;
-              player2.ast = result.ast;
-              player2.stl = result.stl;
-              player2.blk = result.blk;
-              player2.to = result.to;
-              if (player2.fga !== 0) {
-                player2.fg = player2.fgm / player2.fga * 100;
-                player2.fg = Math.round(player2.fg * 100) / 100;
-              }
-              if (player2.fta !== 0) {
-                player2.ft = player2.ftm / player2.fta * 100;
-                player2.ft = Math.round(player2.ft * 100) / 100;
-              }
-              if (player2.fga3 !== 0) {
-                player2.fg3 = player2.fgm3 / player2.fga3 * 100;
-                player2.fg3 = Math.round(player2.fg3 * 100) / 100;
-              }
-            }
-            homePoints += player2.fgm * 2 + player2.ftm + player2.fgm3 * 3;
-          }
-          for (const player2 of this.players2) {
-            if (player2.id === result.id && team === 'visitor') {
-              player2.fgm = result.fgm;
-              player2.fga = result.fga;
-              player2.ftm = result.ftm;
-              player2.fta = result.fta;
-              player2.fgm3 = result.fgm3;
-              player2.fga3 = result.fga3;
-              player2.pf = result.pf;
-              player2.reb = result.reb;
-              player2.ast = result.ast;
-              player2.stl = result.stl;
-              player2.blk = result.blk;
-              player2.to = result.to;
-              if (player2.fga !== 0) {
-                player2.fg = player2.fgm / player2.fga * 100;
-                player2.fg = Math.round(player2.fg * 100) / 100;
-              }
-              if (player2.fta !== 0) {
-                player2.ft = player2.ftm / player2.fta * 100;
-                player2.ft = Math.round(player2.ft * 100) / 100;
-              }
-              if (player2.fga3 !== 0) {
-                player2.fg3 = player2.fgm3 / player2.fga3 * 100;
-                player2.fg3 = Math.round(player2.fg3 * 100) / 100;
-              }
-            }
-            visitorPoints += player2.fgm * 2 + player2.ftm + player2.fgm3 * 3;
-          }
-          this.game.homePoints = homePoints;
-          this.game.visitorPoints = visitorPoints;
-          this.gamesService.updateGame(this.game.id, this.game).subscribe( () => {
+        if (!result.id) {
+          result.gameId = this.game.id;
+          result.playerId = player.id;
+          this.playersService.addStats(result).subscribe(id => {
+            this.updateGame(result);
           }, error => {
             console.log(error);
+            this.authService.handleError(error);
           });
-        }, error => {
-          console.log(error);
-          this.authService.handleError(error);
-        });
+        } else {
+          this.playersService.updateStats(result.id, result).subscribe(() => {
+            this.updateGame(result);
+          }, error => {
+            console.log(error);
+            this.authService.handleError(error);
+          });
+        }
       }
     });
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(GamesInputComponent, {
-      data: { game: this.game, title: 'Update Game', buttonText: 'Update', noTables: true }
+      data: {game: this.game, title: 'Update Game', buttonText: 'Update', noTables: true}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

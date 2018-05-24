@@ -70,7 +70,7 @@ export class GamesComponent implements OnInit {
     this.gamesService.addGame(newGame).subscribe(id => {
       game.id = id;
       this.games.push(game);
-      this.openSnackBar('Game \'' + game.homeTeam.name + 'vs' + game.visitorTeam.name + '\' added');
+      this.openSnackBar('Game \'' + game.homeTeam.name + ' - ' + game.visitorTeam.name + '\' added');
     }, error => {
       console.log(error);
       this.authService.handleError(error);

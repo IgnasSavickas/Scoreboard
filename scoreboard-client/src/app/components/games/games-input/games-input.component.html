@@ -1,37 +1,43 @@
 <h1 mat-dialog-title>{{title}}</h1>
 <div>
-  <form #teamInputForm="ngForm">
+  <form [formGroup]="gameInputForm">
     <div mat-dialog-content>
       <mat-form-field *ngIf="buttonText !== 'Update'">
-        <mat-select placeholder="Home Team" [(ngModel)]="game.homeTeam" name="gameHomeTeam" (change)="onChange($event)">
+        <mat-select placeholder="Home Team" formControlName="homeTeam" (change)="changeValue(visitorTeam)" required>
           <mat-option *ngFor="let team of teams" [value]="team">
             {{team.name}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="homeTeam.invalid">{{getHomeTeamErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field *ngIf="buttonText !== 'Update'">
-        <mat-select placeholder="Visitor Team" [(ngModel)]="game.visitorTeam" name="gameVisitorTeam" (change)="onChange2($event)">
+        <mat-select placeholder="Visitor Team" formControlName="visitorTeam" (change)="changeValue(homeTeam)" required>
           <mat-option *ngFor="let team of teams" [value]="team">
             {{team.name}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="visitorTeam.invalid">{{getVisitorTeamErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime-local" placeholder="Start Date" [(ngModel)]="game.startDate" id="startDate" name="gameStartDate" required>
+        <input matInput type="datetime-local" placeholder="Start Date" formControlName="startDate" id="startDate" required (change)="changeValue(endDate)">
+        <mat-error *ngIf="startDate.invalid">{{getStartDateErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime-local" placeholder="End Date" [(ngModel)]="game.endDate" id="endDate" name="gameEndDate" required>
+        <input matInput type="datetime-local" placeholder="End Date" formControlName="endDate" id="endDate" required>
+        <mat-error *ngIf="endDate.invalid">{{getEndDateErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Period Time" [(ngModel)]="game.periodTime" id="periodTime" name="gamePeriodTime" required>
+        <input matInput placeholder="Period Time" formControlName="periodTime" id="periodTime">
+        <mat-error *ngIf="periodTime.invalid">{{getPeriodTimeErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="number" placeholder="Periods" [(ngModel)]="game.periods" id="periods" name="gamePeriods" required>
+        <input matInput type="number" placeholder="Periods" formControlName="periods" id="periods" min="1">
+        <mat-error *ngIf="periods.invalid">{{getPeriodsErrorMessage()}}</mat-error>
       </mat-form-field>
-      <mat-checkbox [(ngModel)]="game.public" id="public" name="gamePublic">Public</mat-checkbox>
+      <mat-checkbox id="public">Public</mat-checkbox>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button [disabled]="!teamInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+      <button mat-raised-button [disabled]="!gameInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>
     </div>
   </form>
 </div>

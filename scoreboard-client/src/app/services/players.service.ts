@@ -39,4 +39,10 @@ export class PlayersService {
         .set('Content-Type', 'application/json'), responseType: 'text'});
   }
 
+  addStats(stats: Stats): Observable<string> {
+    const body = JSON.stringify(stats);
+    return this.http.post(`${this.statsApiUrl}`, body, {headers: new HttpHeaders()
+        .set('Content-Type', 'application/json'), responseType: 'text'});
+  }
+
 }

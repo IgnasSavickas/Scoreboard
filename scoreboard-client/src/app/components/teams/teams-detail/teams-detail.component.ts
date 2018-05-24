@@ -86,9 +86,16 @@ export class TeamsDetailComponent implements OnInit {
     });
   }
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 3000
+    });
+  }
+
   deleteTeam() {
     this.teamsService.deleteTeam(this.team.id).subscribe(() => {
       this.router.navigate(['/teams']);
+      this.openSnackBar('Team \'' + this.team.name + '\' deleted');
     }, error => {
       console.log(error);
       this.authService.handleError(error);
@@ -103,9 +110,7 @@ export class TeamsDetailComponent implements OnInit {
       if (result) {
         this.teamsService.updateTeam(result.id, result).subscribe(() => {
           this.team = result;
-          this.snackBar.open('Team \'' + this.team.name + '\' updated', null, {
-            duration: 3000
-          });
+          this.openSnackBar('Team \'' + this.team.name + '\' updated');
         }, error => {
           console.log(error);
           this.authService.handleError(error);
@@ -129,9 +134,18 @@ export class TeamsDetailComponent implements OnInit {
           newPlayer.number = result.number;
           this.players.push(newPlayer);
           this.dataSource.data = this.players;
+          if (newPlayer.surname) {
+            this.openSnackBar('Player \'' + newPlayer.name + ' ' + newPlayer.surname + '\' added');
+          } else {
+            this.openSnackBar('Player \'' + newPlayer.name + '\' added');
+          }
         }, error => {
-          console.log(error);
-          this.authService.handleError(error);
+          if (error.status === 409) {
+            this.openSnackBar('Choose different number for a player');
+          } else {
+            console.log(error);
+            this.authService.handleError(error);
+          }
         });
       }
     });
@@ -143,6 +157,11 @@ export class TeamsDetailComponent implements OnInit {
       if (index !== -1) {
         this.players.splice(index, 1);
         this.dataSource.data = this.players;
+        if (player.surname) {
+          this.openSnackBar('Player \'' + player.name + ' ' + player.surname + '\' removed');
+        } else {
+          this.openSnackBar('Player \'' + player.name + '\' removed');
+        }
       }
     }, error => {
       console.log(error);
@@ -157,6 +176,11 @@ export class TeamsDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.playersService.updatePlayer(result.id, result).subscribe(() => {
+          if (player.surname) {
+            this.openSnackBar('Player \'' + player.name + ' ' + player.surname + '\' updated');
+          } else {
+            this.openSnackBar('Player \'' + player.name + '\' updated');
+          }
         }, error => {
           console.log(error);
           this.authService.handleError(error);

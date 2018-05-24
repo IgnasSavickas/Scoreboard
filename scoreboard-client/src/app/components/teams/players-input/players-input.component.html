@@ -1,17 +1,20 @@
 <h1 mat-dialog-title>{{title}}</h1>
-<form #playerInputForm="ngForm">
+<form [formGroup]="playerInputForm">
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput type="number" placeholder="#" [(ngModel)]="player.number" id="number" name="playerNumber" required>
+      <input matInput type="number" placeholder="#" formControlName="number" id="number" min="0" required>
+      <mat-error *ngIf="number.invalid">{{getNumberErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Name" [(ngModel)]="player.name" id="name" name="playerName" required>
+      <input matInput placeholder="Name" formControlName="name" id="name" required>
+      <mat-error *ngIf="name.invalid">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Surname" [(ngModel)]="player.surname" id="surname" name="playerSurname" required>
+      <input matInput placeholder="Surname" formControlName="surname" id="surname">
+      <mat-error *ngIf="surname.invalid">{{getSurnameErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [disabled]="!playerInputForm.form.valid" (click)="onButtonClick()">{{buttonText}}</button>
+    <button mat-raised-button [disabled]="!playerInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>
   </div>
 </form>

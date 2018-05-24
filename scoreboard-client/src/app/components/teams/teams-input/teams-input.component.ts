@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Team} from '../../../models/team';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FileUploadService} from '../../../services/file-upload.service';
@@ -17,6 +17,7 @@ export class TeamsInputComponent implements OnInit {
   buttonText: string;
   selectedFile: File;
   imagePreviewUrl: string;
+  teamInputForm: FormGroup;
 
   constructor(private fileUploadService: FileUploadService, public dialogRef: MatDialogRef<TeamsInputComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -31,7 +32,12 @@ export class TeamsInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.teamInputForm = new FormGroup({
+      'name' : new FormControl(this.team.name, [Validators.required, Validators.maxLength(100)])
+    });
   }
+
+  get name() { return this.teamInputForm.get('name'); }
 
   onFileSelected(event) {
     const selectedFile = event.target.files[0];
@@ -69,10 +75,15 @@ export class TeamsInputComponent implements OnInit {
     }
   }
 
+  getErrorMessage() {
+    return this.name.hasError('required') ? 'You must enter a name' :
+      'Max length is 100';
+  }
+
   addTeam() {
     const teamResult = new Team();
     teamResult.id = this.team.id;
-    teamResult.name = this.team.name;
+    teamResult.name = this.name.value;
     teamResult.logoPath = this.team.logoPath;
     this.dialogRef.close(teamResult);
   }
