@@ -34,7 +34,7 @@
         <input matInput type="number" placeholder="Periods" formControlName="periods" id="periods" min="1">
         <mat-error *ngIf="periods.invalid">{{getPeriodsErrorMessage()}}</mat-error>
       </mat-form-field>
-      <mat-checkbox id="public">Public</mat-checkbox>
+      <mat-checkbox formControlName="public" id="public">Public</mat-checkbox>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button [disabled]="!gameInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>

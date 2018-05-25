@@ -14,9 +14,9 @@ namespace ScoreboardServer.Models
         public int Fta { get; set; }
         public int Fgm3 { get; set; }
         public int Fga3 { get; set; }
-        public int Fg { get; set; }
-        public int Ft { get; set; }
-        public int Fg3 { get; set; }
+        public double Fg { get; set; }
+        public double Ft { get; set; }
+        public double Fg3 { get; set; }
         public int Pf { get; set; }
         public int Reb { get; set; }
         public int Ast { get; set; }

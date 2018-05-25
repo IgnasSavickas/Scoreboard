@@ -12,7 +12,7 @@ export class GamesService {
 
   constructor(private http: HttpClient) { }
 
-  getGames(offset?: number, limit?: number): Observable<Game[]> {
+  getGames(offset: number, limit: number): Observable<Game[]> {
     return this.http.get<Game[]>(`${this.gamesApiUrl}?offset=${offset}&limit=${limit}`);
   }
 

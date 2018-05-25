@@ -1,6 +1,6 @@
 <app-header [titleName]="'Home'"></app-header>
-<mat-toolbar>Public Games</mat-toolbar>
-<p *ngIf="games.length == 0">There is no games.</p>
+<mat-toolbar *ngIf="games.length">Public Games</mat-toolbar>
+<mat-toolbar *ngIf="!games.length">There are no public games</mat-toolbar>
 <mat-nav-list>
   <mat-list-item *ngFor="let game of games" (click)="onGameClick(game)">
     <div class="logo">
@@ -14,7 +14,7 @@
     </div>
   </mat-list-item>
 </mat-nav-list>
-<mat-paginator [length]="gamesSize"
+<mat-paginator *ngIf="games.length" [length]="gamesSize"
                [pageSize]="pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="onPageEvent($event)">

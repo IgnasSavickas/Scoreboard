@@ -45,6 +45,7 @@ import {GamesInputComponent, StatsInputComponent} from './components/games/games
 import {FileUploadService} from './services/file-upload.service';
 import { GamesDetailComponent } from './components/games/games-detail/games-detail.component';
 import { TeamsDetailComponent } from './components/teams/teams-detail/teams-detail.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -85,6 +86,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,

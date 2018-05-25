@@ -1,10 +1,12 @@
-.menu {
+.menu, .user-menu {
   padding: 0 15px;
   font-family: ScoreBoard, sans-serif;
 }
 
-.spacer {
-  flex: 1 1 auto;
+.user-menu, .menu-button {
+  position: absolute;
+  right: 15px;
+  top: 14px;
 }
 
 .basketball {

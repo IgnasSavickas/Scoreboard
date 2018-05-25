@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using ScoreboardServer.Models;
@@ -89,6 +90,10 @@ namespace ScoreboardServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Game value)
         {
+            if (value.HomeTeamId == value.VisitorTeamId)
+            {
+                return new StatusCodeResult(StatusCodes.Status409Conflict);
+            }
             var userId = GetUserId();
             value.ApplicationUserId = userId;
             value.DateCreated = DateTime.Now;

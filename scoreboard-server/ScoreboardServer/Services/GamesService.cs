@@ -24,12 +24,12 @@ namespace ScoreboardServer.Services
                 return null;
             }
 
-            if (userId == null && game.Public)
+            if (game.ApplicationUserId == userId || game.Public == true)
             {
                 return game;
             }
 
-            return game;
+            return null;
         }
 
         public async Task<ICollection<Game>> GetAllGames(int offset, int limit, string userId = null)
@@ -46,7 +46,7 @@ namespace ScoreboardServer.Services
 
         public async Task<bool> Update(int id, Game updatedGame, string userId)
         {
-            var existringGame = await GetGameById(id, userId);
+            var existringGame = await _repository.GetById(id);
             if (existringGame == null)
             {
                 return false;

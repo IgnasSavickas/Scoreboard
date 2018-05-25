@@ -1,5 +1,5 @@
 <app-header [titleName]="'Teams'" [addButton]="true" (dialogClosed)="addNewTeam($event)"></app-header>
-<p *ngIf="teams.length == 0">There is no teams.</p>
+<mat-toolbar *ngIf="!teams.length">There are no teams</mat-toolbar>
 <mat-nav-list>
   <mat-list-item *ngFor="let team of teams" (click)="onTeamClick(team)">
     {{team.name}}
@@ -8,7 +8,7 @@
     </div>
   </mat-list-item>
 </mat-nav-list>
-<mat-paginator [length]="teamsSize"
+<mat-paginator *ngIf="teams.length" [length]="teamsSize"
                [pageSize]="pageSize"
                [pageIndex]="pageIndex"
                [pageSizeOptions]="[5, 10, 25, 100]"

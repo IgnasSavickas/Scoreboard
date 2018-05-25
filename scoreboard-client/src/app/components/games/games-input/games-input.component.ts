@@ -45,7 +45,8 @@ export class GamesInputComponent implements OnInit {
       'startDate' : new FormControl(this.game.startDate, [Validators.required]),
       'endDate' : new FormControl(this.game.endDate, [Validators.required]),
       'periodTime' : new FormControl(this.game.periodTime, [Validators.pattern('^([0-5]?[0-9]):([0-5][0-9])$')]),
-      'periods' : new FormControl(this.game.periods, [Validators.max(99), Validators.min(1)])
+      'periods' : new FormControl(this.game.periods, [Validators.max(99), Validators.min(1)]),
+      'public' : new FormControl(this.game.public)
     });
     this.gameInputForm.get('homeTeam').setValidators(this.forbiddenTeamValidator('visitorTeam'));
     this.gameInputForm.get('visitorTeam').setValidators(this.forbiddenTeamValidator('homeTeam'));
@@ -80,6 +81,7 @@ export class GamesInputComponent implements OnInit {
   get endDate() { return this.gameInputForm.get('endDate'); }
   get periodTime() { return this.gameInputForm.get('periodTime'); }
   get periods() { return this.gameInputForm.get('periods'); }
+  get public() { return this.gameInputForm.get('public'); }
 
   getHomeTeamErrorMessage() {
     return this.homeTeam.hasError('required') ? 'You must enter a home team' :
@@ -130,7 +132,9 @@ export class GamesInputComponent implements OnInit {
     gameResult.periodTime = this.periodTime.value;
     gameResult.homeTeam = this.homeTeam.value;
     gameResult.visitorTeam = this.visitorTeam.value;
-    gameResult.public = this.game.public;
+    gameResult.homePoints = this.game.homePoints;
+    gameResult.visitorPoints = this.game.visitorPoints;
+    gameResult.public = this.public.value;
     this.dialogRef.close(gameResult);
   }
 
@@ -149,9 +153,9 @@ export class StatsInputComponent {
 
   constructor(public dialogRef: MatDialogRef<StatsInputComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) {
-    console.log(data);
     this.stats = Object.assign({}, data.player);
     this.stats.id = data.statsId;
+    this.stats.playerId = data.player.id;
     this.title = data.title;
     this.buttonText = data.buttonText;
     this.playerInputForm = new FormGroup({
@@ -220,6 +224,7 @@ export class StatsInputComponent {
     statsResult.stl = this.stl.value;
     statsResult.blk = this.blk.value;
     statsResult.to = this.to.value;
+    statsResult.playerId = this.stats.playerId;
     this.dialogRef.close(statsResult);
   }
 

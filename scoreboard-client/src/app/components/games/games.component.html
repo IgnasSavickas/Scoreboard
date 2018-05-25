@@ -1,5 +1,5 @@
 <app-header [titleName]="'Games'" [addButton]="true" (dialogClosed)="addNewGame($event)"></app-header>
-<p *ngIf="games.length == 0">There is no games.</p>
+<mat-toolbar *ngIf="!games.length">There are no games</mat-toolbar>
 <mat-nav-list>
   <mat-list-item *ngFor="let game of games" (click)="onGameClick(game)">
     <div class="logo">
@@ -13,7 +13,7 @@
     </div>
   </mat-list-item>
 </mat-nav-list>
-<mat-paginator [length]="gamesSize"
+<mat-paginator *ngIf="games.length" [length]="gamesSize"
                [pageSize]="pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="onPageEvent($event)">

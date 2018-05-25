@@ -11,11 +11,14 @@
   padding: 16px;
 }
 
-.actions {
-  display: flex;
+.table-header {
+  padding: 8px 24px 0;
 }
 
-.table-header {
-  min-height: 64px;
-  padding: 8px 24px 0;
+.table-content {
+  overflow-x: auto;
+}
+
+.mat-table {
+  min-width: 768px;
 }

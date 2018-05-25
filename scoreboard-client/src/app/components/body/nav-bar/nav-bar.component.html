@@ -4,14 +4,28 @@
       <img class="basketball" src="../../../../assets/images/Basketball.svg">
       Scoreboard
     </a>
-    <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/teams">Teams</a>
-    <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/games">Games</a>
-    <span class="spacer"></span>
-    <button *ngIf="!isAuthorized" class="menu" mat-button (click)="login()">Login</button>
-    <button *ngIf="isAuthorized" class="menu" mat-button [matMenuTriggerFor]="menu">{{userData.name}}</button>
-    <mat-menu #menu="matMenu">
+    <div fxLayout="row" fxShow="false" fxShow.gt-xs>
+      <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/teams">Teams</a>
+      <a *ngIf="isAuthorized" class="menu" mat-button routerLink="/games">Games</a>
+      <button *ngIf="!isAuthorized" class="user-menu" mat-button (click)="login()">Login</button>
+      <button *ngIf="isAuthorized" class="user-menu" mat-button [matMenuTriggerFor]="userMenu">{{userData.name}}</button>
+      <mat-menu #userMenu="matMenu">
+        <a mat-menu-item target="_blank" href="http://localhost:5000/Manage/Index">Manage</a>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </div>
+    <button mat-button class="menu-button" [matMenuTriggerFor]="menu" fxHide="false" fxHide.gt-xs>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-menu x-position="before" #menu="matMenu">
+    <a *ngIf="isAuthorized" mat-menu-item routerLink="/teams">Teams</a>
+    <a *ngIf="isAuthorized" mat-menu-item routerLink="/games">Games</a>
+    <button *ngIf="!isAuthorized" mat-menu-item (click)="login()">Login</button>
+    <button *ngIf="isAuthorized" mat-menu-item [matMenuTriggerFor]="userMenu">{{userData.name}}</button>
+    <mat-menu #userMenu="matMenu">
       <a mat-menu-item target="_blank" href="http://localhost:5000/Manage/Index">Manage</a>
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
-  </mat-toolbar>
+  </mat-menu>
 </nav>

@@ -22,6 +22,7 @@ export class GamesDetailComponent implements OnInit {
   displayedColumns = ['number', 'name', 'fgma', 'ftma', 'fgma3', 'pf', 'reb', 'ast', 'stl', 'blk', 'to', 'actions'];
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
+  userData: any;
 
   constructor(private authService: AuthService, private gamesService: GamesService, private playersService: PlayersService,
               private fileUploadService: FileUploadService, public dialog: MatDialog, private route: ActivatedRoute,
@@ -29,6 +30,9 @@ export class GamesDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.getUserData().subscribe((userData: boolean) => {
+      this.userData = userData;
+    });
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       this.gamesService.getGame(+id).subscribe(game => {
@@ -187,7 +191,6 @@ export class GamesDetailComponent implements OnInit {
       if (result) {
         if (!result.id) {
           result.gameId = this.game.id;
-          result.playerId = player.id;
           this.playersService.addStats(result).subscribe(id => {
             this.updateGame(result);
           }, error => {
