@@ -112,6 +112,7 @@ namespace ScoreboardServer.Repositories
             existingGame.HomePoints = updatedGame.HomePoints;
             existingGame.VisitorPoints = updatedGame.VisitorPoints;
             existingGame.Public = updatedGame.Public;
+            existingGame.ExcelPath = updatedGame.ExcelPath;
         }
     }
 }

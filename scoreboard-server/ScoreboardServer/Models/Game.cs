@@ -21,6 +21,7 @@ namespace ScoreboardServer.Models
         public int VisitorPoints { get; set; }
         public List<Stats> Stats { get; set; }
         public bool Public { get; set; }
+        public string ExcelPath { get; set; }
         public string ApplicationUserId { get; set; }
     }
 }

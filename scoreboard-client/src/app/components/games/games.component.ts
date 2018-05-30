@@ -68,8 +68,11 @@ export class GamesComponent implements OnInit {
     newGame.homeTeam = undefined;
     newGame.visitorTeam = undefined;
     this.gamesService.addGame(newGame).subscribe(id => {
-      game.id = id;
-      this.games.push(game);
+      if (this.games.length < this.pageSize) {
+        game.id = id;
+        this.games.push(game);
+      }
+      this.gamesSize++;
       this.openSnackBar('Game \'' + game.homeTeam.name + ' - ' + game.visitorTeam.name + '\' added');
     }, error => {
       console.log(error);
@@ -82,6 +85,6 @@ export class GamesComponent implements OnInit {
   }
 
   getImageUrl(imageFilename: string) {
-    return this.fileUploadService.getFileUrl(imageFilename);
+    return this.fileUploadService.getImageUrl(imageFilename);
   }
 }

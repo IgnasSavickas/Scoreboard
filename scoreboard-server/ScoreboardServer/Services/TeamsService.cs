@@ -10,10 +10,12 @@ namespace ScoreboardServer.Services
     public class TeamsService : ITeamsService
     {
         private readonly ITeamsRepository _repository;
+        private readonly IPlayersRepository _playersRepository;
 
-        public TeamsService(ITeamsRepository repository)
+        public TeamsService(ITeamsRepository repository, IPlayersRepository playersRepository)
         {
             _repository = repository;
+            _playersRepository = playersRepository;
         }
 
         public async Task<Team> GetTeamById(int id, string userId)
@@ -23,6 +25,9 @@ namespace ScoreboardServer.Services
             {
                 return null;
             }
+
+            var teamPlayers = await _playersRepository.GetAllByTeamId(id);
+            team.Players = teamPlayers.ToList();
             return team.ApplicationUserId == userId ? team : null;
         }
 

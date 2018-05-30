@@ -6,6 +6,9 @@ import {TeamsService} from '../../../services/teams.service';
 import {AuthService} from '../../../services/auth.service';
 import {Stats} from '../../../models/stats';
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {FileUploadResult} from '../../../models/file-upload-result';
+import {HttpResponse} from '@angular/common/http';
+import {FileUploadService} from '../../../services/file-upload.service';
 
 @Component({
   selector: 'app-games-input',
@@ -17,10 +20,11 @@ export class GamesInputComponent implements OnInit {
   teams: Team[] = [];
   title: string;
   buttonText: string;
+  selectedFile: File;
   gameInputForm: FormGroup;
 
-  constructor(private teamsService: TeamsService, private authService: AuthService, public dialog: MatDialog,
-              public dialogRef: MatDialogRef<GamesInputComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private teamsService: TeamsService, private fileUploadService: FileUploadService, private authService: AuthService,
+              public dialog: MatDialog, public dialogRef: MatDialogRef<GamesInputComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.game = Object.assign({}, data.game);
       this.title = data.title;
@@ -121,7 +125,19 @@ export class GamesInputComponent implements OnInit {
     stats.setValue(stats.value);
   }
 
-  onButtonClick() {
+  onFileSelected(event) {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      this.selectedFile = selectedFile;
+    }
+  }
+
+  onDeleteClick() {
+    this.selectedFile = undefined;
+    this.game.excelPath = undefined;
+  }
+
+  addGame() {
     const gameResult = new Game();
     gameResult.id = this.game.id;
     gameResult.startDate = this.startDate.value;
@@ -134,10 +150,31 @@ export class GamesInputComponent implements OnInit {
     gameResult.visitorTeam = this.visitorTeam.value;
     gameResult.homePoints = this.game.homePoints;
     gameResult.visitorPoints = this.game.visitorPoints;
-    gameResult.public = this.public.value;
+    if (this.public.value) {
+      gameResult.public = this.public.value;
+    }
+    gameResult.excelPath = this.game.excelPath;
+    gameResult.applicationUserId = this.game.applicationUserId;
     this.dialogRef.close(gameResult);
   }
 
+  onButtonClick() {
+    if (this.selectedFile) {
+      this.fileUploadService.uploadFile(this.selectedFile).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          if (event.ok) {
+            const uploadResult = event.body as FileUploadResult;
+            this.game.excelPath = uploadResult.fileName;
+            this.addGame();
+          } else {
+            console.log('Failed to upload!');
+          }
+        }
+      });
+    } else {
+      this.addGame();
+    }
+  }
 }
 
 @Component({

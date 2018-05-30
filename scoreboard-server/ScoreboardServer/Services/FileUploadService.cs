@@ -20,7 +20,7 @@ namespace ScoreboardServer.Services
             string fileName;
             if (file.Length > 0)
             {
-                var filePath = GetFileDirectory();
+                var filePath = file.FileName.Contains(".xls") ? GetExcelDirectory() : GetImageDirectory();
                 fileName = Guid.NewGuid() + file.FileName;
                 var fileFullName = Path.Combine(filePath, fileName);
                 using (var stream = new FileStream(fileFullName, FileMode.Create))
@@ -41,9 +41,18 @@ namespace ScoreboardServer.Services
             return result;
         }
 
-        private string GetFileDirectory()
+        private string GetImageDirectory()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "images");
+
+            Directory.CreateDirectory(filePath);
+
+            return filePath;
+        }
+
+        private string GetExcelDirectory()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "excel");
 
             Directory.CreateDirectory(filePath);
 

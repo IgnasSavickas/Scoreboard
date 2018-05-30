@@ -176,6 +176,9 @@ export class TeamsDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.playersService.updatePlayer(result.id, result).subscribe(() => {
+          player.number = result.number;
+          player.name = result.name;
+          player.surname = result.surname;
           if (player.surname) {
             this.openSnackBar('Player \'' + player.name + ' ' + player.surname + '\' updated');
           } else {
@@ -190,7 +193,7 @@ export class TeamsDetailComponent implements OnInit {
   }
 
   getImageUrl(imageFilename: string) {
-    return this.fileUploadService.getFileUrl(imageFilename);
+    return this.fileUploadService.getImageUrl(imageFilename);
   }
 
   applyFilter(filterValue: string) {

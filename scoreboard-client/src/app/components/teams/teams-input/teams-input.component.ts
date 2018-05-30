@@ -26,7 +26,7 @@ export class TeamsInputComponent implements OnInit {
       this.title = data.title;
       this.buttonText = data.buttonText;
       if (this.team.logoPath) {
-        this.imagePreviewUrl = fileUploadService.getFileUrl(this.team.logoPath);
+        this.imagePreviewUrl = fileUploadService.getImageUrl(this.team.logoPath);
       }
     }
   }

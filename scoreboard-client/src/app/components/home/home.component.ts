@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   getImageUrl(imageFilename: string) {
-    return this.fileUploadService.getFileUrl(imageFilename);
+    return this.fileUploadService.getImageUrl(imageFilename);
   }
 
 }

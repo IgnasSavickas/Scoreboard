@@ -49,7 +49,7 @@ export class TeamsComponent implements OnInit {
   }
 
   getImageUrl(imageFilename: string) {
-    return this.fileUploadService.getFileUrl(imageFilename);
+    return this.fileUploadService.getImageUrl(imageFilename);
   }
 
   onPageEvent(pageEvent: PageEvent) {

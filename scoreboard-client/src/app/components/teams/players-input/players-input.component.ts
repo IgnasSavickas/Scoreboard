@@ -29,7 +29,7 @@ export class PlayersInputComponent implements OnInit {
 
   ngOnInit() {
     this.playerInputForm = new FormGroup({
-      'number' : new FormControl(this.player.number, [Validators.required, Validators.max(99), Validators.min(1)]),
+      'number' : new FormControl(this.player.number, [Validators.required, Validators.max(99), Validators.min(0)]),
       'name' : new FormControl(this.player.name, [Validators.required, Validators.maxLength(100),
         Validators.pattern('[A-Za-z]+')]),
       'surname' : new FormControl(this.player.surname, [Validators.maxLength(100),

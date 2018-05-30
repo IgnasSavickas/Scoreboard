@@ -60,6 +60,7 @@ namespace ScoreboardServer.Repositories
             var players = await _players
                 .Include(x => x.Stats)
                 .Where(x => x.TeamId == teamId)
+                .OrderBy(x => x.Number)
                 .ToArrayAsync();
 
             return players;

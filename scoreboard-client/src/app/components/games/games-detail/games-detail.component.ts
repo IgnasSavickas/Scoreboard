@@ -3,7 +3,7 @@ import {GamesService} from '../../../services/games.service';
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Game} from '../../../models/game';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatSnackBar, MatTableDataSource} from '@angular/material';
 import {Player} from '../../../models/player';
 import {PlayersService} from '../../../services/players.service';
 import {GamesInputComponent, StatsInputComponent} from '../games-input/games-input.component';
@@ -25,8 +25,8 @@ export class GamesDetailComponent implements OnInit {
   userData: any;
 
   constructor(private authService: AuthService, private gamesService: GamesService, private playersService: PlayersService,
-              private fileUploadService: FileUploadService, public dialog: MatDialog, private route: ActivatedRoute,
-              private router: Router) {
+              private fileUploadService: FileUploadService, public dialog: MatDialog, public snackBar: MatSnackBar,
+              private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -119,16 +119,10 @@ export class GamesDetailComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
-  applyFilter2(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource2.filter = filterValue;
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 3000
+    });
   }
 
   updatePoints(players, result) {
@@ -193,6 +187,7 @@ export class GamesDetailComponent implements OnInit {
           result.gameId = this.game.id;
           this.playersService.addStats(result).subscribe(id => {
             this.updateGame(result);
+            this.openSnackBar('Player\'s \'' + player.name + ' ' + player.surname + '\' stats updated');
           }, error => {
             console.log(error);
             this.authService.handleError(error);
@@ -200,6 +195,7 @@ export class GamesDetailComponent implements OnInit {
         } else {
           this.playersService.updateStats(result.id, result).subscribe(() => {
             this.updateGame(result);
+            this.openSnackBar('Player\'s \'' + player.name + ' ' + player.surname + '\' stats updated');
           }, error => {
             console.log(error);
             this.authService.handleError(error);
@@ -217,6 +213,7 @@ export class GamesDetailComponent implements OnInit {
       if (result) {
         this.gamesService.updateGame(result.id, result).subscribe(() => {
           this.game = result;
+          this.openSnackBar('Game \'' + this.game.homeTeam.name + ' - ' + this.game.visitorTeam.name + '\' updated');
         }, error => {
           console.log(error);
           this.authService.handleError(error);
@@ -228,6 +225,7 @@ export class GamesDetailComponent implements OnInit {
   deleteGame() {
     this.gamesService.deleteGame(this.game.id).subscribe(() => {
       this.router.navigate(['/games']);
+      this.openSnackBar('Game \'' + this.game.homeTeam.name + ' - ' + this.game.visitorTeam.name + '\' deleted');
     }, error => {
       console.log(error);
       this.authService.handleError(error);
@@ -235,7 +233,11 @@ export class GamesDetailComponent implements OnInit {
   }
 
   getImageUrl(imageFilename: string) {
-    return this.fileUploadService.getFileUrl(imageFilename);
+    return this.fileUploadService.getImageUrl(imageFilename);
+  }
+
+  getExcelUrl(excelFilename: string) {
+    return this.fileUploadService.getExcelUrl(excelFilename);
   }
 
 }

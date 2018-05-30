@@ -11,3 +11,11 @@
 .actions {
   display: flex;
 }
+
+.file-upload {
+  margin-bottom: 10px;
+}
+
+.file-upload input {
+  display: none;
+}

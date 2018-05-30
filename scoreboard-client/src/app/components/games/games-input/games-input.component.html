@@ -36,6 +36,13 @@
       </mat-form-field>
       <mat-checkbox formControlName="public" id="public">Public</mat-checkbox>
     </div>
+    <div class="file-upload">
+      <button mat-raised-button color="primary" (click)="fileUpload.click()">Upload Excel file</button>
+      <input placeholder="Excel" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" (change)="onFileSelected($event)" #fileUpload>
+      <button mat-icon-button *ngIf="selectedFile || game.excelPath" color="warn" (click)="onDeleteClick()">
+        <mat-icon aria-label="Remove" matTooltip="Remove excel file">clear</mat-icon>
+      </button>
+    </div>
     <div mat-dialog-actions>
       <button mat-raised-button [disabled]="!gameInputForm.valid" (click)="onButtonClick()">{{buttonText}}</button>
     </div>

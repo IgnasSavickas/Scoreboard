@@ -16,5 +16,6 @@ export class Game {
   visitorPoints = 0;
   stats: Stats[];
   public: boolean;
+  excelPath: string;
   applicationUserId: string;
 }

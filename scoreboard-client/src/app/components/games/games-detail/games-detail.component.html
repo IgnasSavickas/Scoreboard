@@ -21,14 +21,12 @@
   <button mat-mini-fab *ngIf="game?.applicationUserId === userData.sub" color="warn" (click)="deleteGame()">
     <mat-icon aria-label="Delete" matTooltip="Delete Game">delete</mat-icon>
   </button>
+  <a mat-mini-fab *ngIf="game?.excelPath" color="primary" [href]="getExcelUrl(game?.excelPath)" [download]="game?.homeTeam + '-' + game?.visitorTeam + '_' + game?.startDate">
+    <mat-icon aria-label="Excel" matTooltip="Download Excel file">save_alt</mat-icon>
+  </a>
 </mat-card>
 <mat-toolbar>{{game?.homeTeam.name}}</mat-toolbar>
 <div class="mat-elevation-z8">
-  <div class="table-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
   <div class="table-content">
     <mat-table #table [dataSource]="dataSource">
 
@@ -105,11 +103,6 @@
 </div>
 <mat-toolbar>{{game?.visitorTeam.name}}</mat-toolbar>
 <div class="mat-elevation-z8">
-  <div class="table-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
   <div class="table-content">
     <mat-table #table [dataSource]="dataSource2">
 

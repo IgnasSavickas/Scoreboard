@@ -108,12 +108,20 @@ namespace ScoreboardServer
 
             var imagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "images");
             Directory.CreateDirectory(imagesDirectoryPath);
+            var excelDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "excel");
+            Directory.CreateDirectory(excelDirectoryPath);
 
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     imagesDirectoryPath),
                 RequestPath = new PathString("/images")
+            });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    excelDirectoryPath),
+                RequestPath = new PathString("/excel")
             });
 
             app.UseMvc();
