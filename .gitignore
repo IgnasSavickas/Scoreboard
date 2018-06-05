@@ -306,4 +306,5 @@ Thumbs.db
 
 database.db
 scoreboard-server/ScoreboardServer/images/
+excel/
 !scoreboard-server/IdentityServer/wwwroot/lib/

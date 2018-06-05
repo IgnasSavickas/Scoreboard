@@ -22,7 +22,7 @@ export class TeamsDetailComponent implements OnInit {
   players: Player[] = [];
   games: Game[] = [];
   displayedColumns = ['number', 'name', 'fgma', 'ftma', 'fgma3', 'pf', 'reb', 'ast', 'stl', 'blk', 'to', 'actions'];
-  displayedColumns2 = ['teams', 'scores', 'dates'];
+  displayedColumns2 = ['teams', 'scores', 'start date'];
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
 
